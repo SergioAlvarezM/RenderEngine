@@ -12,7 +12,11 @@
 //                                 Constructor y destructor
 /*---------------------------------------------------------------------------------------------*/
 
-Render::Render() {}
+Render::Render() {
+    camera = nullptr;
+    window = nullptr;
+    scene = nullptr;
+}
 
 Render::~Render() {
     // finish glfw when the renderer is detroyed
@@ -83,6 +87,11 @@ int Render::init(const int WIDTH, const int HEIGHT) {
 }
 
 bool Render::isWindowsClosed() {
+
+    // errores
+    if (this->window == nullptr)
+        error("No se ha inicializado el render.");
+
     return glfwWindowShouldClose(this->window);
 }
 
@@ -96,11 +105,43 @@ void Render::setCamera(Camera *camera) {
 
 void Render::swapBuffers() {
 
+    // ERRORES
+    if (this->window == nullptr)
+        error("No se inicializo el render");
+
+
     glfwSwapBuffers(this->getWindow());
 
 }
 
 void Render::clearScreen(float R, float G, float B, float Alpha) {
-    glClearColor(R,G,B,Alpha);
+    glClearColor(R, G, B, Alpha);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void Render::drawScene() {
+
+    //errores
+    if (this->camera == nullptr)
+        error("No se ha configurado una camara para el render");
+
+    this->scene->drawModels(this->WIDTH, this->HEIGHT, this->camera);
+}
+
+void Render::setScene(Scene *scene) {
+    this->scene = scene;
+}
+
+void Render::error(std::string msg) {
+
+    std::cout << "Error: " << "RENDER: " << msg << std::endl;
+
+}
+
+int Render::getWidth() const {
+    return WIDTH;
+}
+
+int Render::getHeight() const {
+    return HEIGHT;
 }

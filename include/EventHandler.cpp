@@ -50,3 +50,7 @@ void EventHandler::getEvents() {
 EventHandler::EventHandler() {}
 
 EventHandler::~EventHandler() {}
+
+float EventHandler::getLastFrame() const {
+    return lastFrame;
+}

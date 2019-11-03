@@ -8,6 +8,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "Camera.h"
+#include "Scene.h"
 
 class Render {
 
@@ -16,6 +17,7 @@ private:
     /* Variables utiles para el rendering */
     GLFWwindow *window;
     Camera *camera;
+    Scene* scene;
     int WIDTH;
     int HEIGHT;
 
@@ -35,6 +37,9 @@ public:
     /* Metodo que retorna si la ventana ha sido cerrada */
     bool isWindowsClosed();
 
+    /* Metodo que se encarga de dibujar la escena */
+    void drawScene();
+
     /* Metodo que sirve para haer el swap de buffers al renderizar */
     void swapBuffers();
 
@@ -52,6 +57,19 @@ public:
     GLFWwindow *getWindow();
 
     void setCamera(Camera *camera);
+
+    void setScene(Scene *scene);
+
+    int getWidth() const;
+
+    int getHeight() const;
+
+    /*********
+     * UTILS *
+     *********/
+
+    /* Metodo que sirve para entregar un mensaje de error */
+     void error(std::string msg);
 
 /* Constructor and destructor */
     Render();

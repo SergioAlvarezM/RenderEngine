@@ -37,6 +37,9 @@ public:
     //-----------------------
     /* SETTERS AND GETTERS */
     // ----------------------
+
+    /* Function must follow the following contract:
+     *      void function(GLFWwindow *window, double xpos, double ypos)*/
     void setMouseCallback(GLFWcursorposfun method);
 
     void setScrollCallback(GLFWscrollfun method);
@@ -45,6 +48,7 @@ public:
 
     void setCamera(Camera *camera);
 
+    float getLastFrame() const;
 
     /* CONSTRUCTORS AND DESTRUCTORS */
     EventHandler();
