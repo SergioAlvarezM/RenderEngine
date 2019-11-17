@@ -50,6 +50,8 @@ public:
 
     float getLastFrame() const;
 
+    float getDeltaTime() const;
+
     /* CONSTRUCTORS AND DESTRUCTORS */
     EventHandler();
 

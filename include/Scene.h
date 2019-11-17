@@ -5,7 +5,7 @@
 #ifndef RENDERENGINE_SCENE_H
 #define RENDERENGINE_SCENE_H
 
-#include<vector>
+#include <vector>
 #include <GLFW/glfw3.h>
 #include "Model.h"
 #include "Camera.h"
@@ -17,6 +17,7 @@ private:
     std::vector<Model*> Models;
     std::vector<int> vectorVAO;
     std::vector<int> vectorVBO;
+    std::vector<int> vectorVBOC;
 
 public:
 
@@ -41,9 +42,16 @@ public:
     /* GETTERS AND SETTERS */
     /***********************/
 
+
     /*********
      * UTILS *
      *********/
+
+    /* delete the model from the arrays. (delete data in all arrays) */
+    void deleteModel(Model* model);
+
+    /* Method to add a model that draws the axis on the screen */
+    void addAxis();
 
     /* Metodo que sirve para entregar un mensaje de error */
     void error(std::string msg);

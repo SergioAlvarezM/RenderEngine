@@ -81,3 +81,17 @@ const std::string &Model::getName()  {
 void Model::setName( std::string &name) {
     Model::name = name;
 }
+
+const std::vector<float> &Model::getColors() const {
+    return colors;
+}
+
+void Model::setColors(const std::vector<float> &colors) {
+    Model::colors = colors;
+}
+
+Model::~Model() {
+
+    // must delete the shader
+    delete this->shader;
+}

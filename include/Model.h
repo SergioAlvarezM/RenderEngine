@@ -38,6 +38,7 @@ private:
     glm::vec3 pos;
     Rotation rot{};
     std::vector<float> vertex;
+    std::vector<float> colors;
 
     /* parametros usados por el render para dibujar */
     GLint drawType;
@@ -52,6 +53,8 @@ public:
      * CONSTRUCTOR *
      ***************/
     Model() noexcept;
+
+    virtual ~Model();
 
     /**************************************/
     /* Metodos compartidos de cada modelo */
@@ -80,6 +83,10 @@ public:
     [[nodiscard]] const Rotation &getRot() const;
 
     void setRot(const Rotation &rotation);
+
+    const std::vector<float> &getColors() const;
+
+    void setColors(const std::vector<float> &colors);
 
     GLint getDrawType() const;
 

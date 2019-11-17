@@ -9,6 +9,7 @@
 #include <GLFW/glfw3.h>
 #include "Camera.h"
 #include "Scene.h"
+#include "EventHandler.h"
 
 class Render {
 
@@ -18,6 +19,10 @@ private:
     GLFWwindow *window;
     Camera *camera;
     Scene* scene;
+
+    bool showFPS;
+    const char *title;
+
     int WIDTH;
     int HEIGHT;
 
@@ -67,6 +72,12 @@ public:
     /*********
      * UTILS *
      *********/
+
+    /* Metodos para cambiar el titulo de la ventana */
+    void setWindowsTitle(const char *title, bool showFPS);
+
+    /* Metodo para actualizar el titulo, solo debe llamarse para titulos que se actualizan */
+    void updateTitle(EventHandler* eventHandler);
 
     /* Metodo que sirve para entregar un mensaje de error */
      void error(std::string msg);

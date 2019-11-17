@@ -13,6 +13,6 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(libs/glfw-3.3)
 
-add_executable(RenderEngine main.cpp glad.c include/Scene.cpp include/Scene.h include/Render.cpp include/Render.h include/Camera.h include/Shader.h include/EventHandler.cpp include/EventHandler.h include/Model.cpp include/Model.h)
+add_executable(RenderEngine main.cpp glad.c include/Scene.cpp include/Scene.h include/Render.cpp include/Render.h include/Camera.h include/Shader.h include/EventHandler.cpp include/EventHandler.h include/Model.cpp include/Model.h Setup.h)
 
 target_link_libraries(RenderEngine glfw)

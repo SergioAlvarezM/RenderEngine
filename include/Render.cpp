@@ -4,6 +4,7 @@
 
 #include "Render.h"
 #include "Camera.h"
+#include "EventHandler.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
 
@@ -144,4 +145,39 @@ int Render::getWidth() const {
 
 int Render::getHeight() const {
     return HEIGHT;
+}
+
+void Render::setWindowsTitle(const char *title, bool showFPS) {
+
+    // set the parameters.
+    this->title = title;
+    this->showFPS = showFPS;
+
+    // change the window with the title
+    glfwSetWindowTitle(this->window, title);
+
+}
+
+void Render::updateTitle(EventHandler* eventHandler) {
+
+    // only update if the showFPS is true, in other case the title should not change
+    if(this->showFPS){
+
+        // arreglo que tendra el titulo
+        char title[100];
+
+        // add the title of the application
+        strcpy(title,this->title);
+
+        // add the separator
+        strcat(title, " - ");
+
+        // calculate and add the frames
+        std::string frames = std::to_string((int) (1 / eventHandler->getDeltaTime()));
+        strcat(title,frames.c_str());
+
+        // change the title
+        glfwSetWindowTitle(this->window, title);
+    }
+
 }

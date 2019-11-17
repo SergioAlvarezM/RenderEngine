@@ -54,3 +54,7 @@ EventHandler::~EventHandler() {}
 float EventHandler::getLastFrame() const {
     return lastFrame;
 }
+
+float EventHandler::getDeltaTime() const {
+    return deltaTime;
+}
