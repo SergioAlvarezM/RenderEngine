@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "Setup.h"
+#include <Setup.h>
 
 // Functions that have to be global due to GLFW
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);

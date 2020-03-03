@@ -33,9 +33,9 @@ void Setup(Scene *scene, Render *render, Camera *camera, EventHandler *eventHand
 
     // build and compile our shader zprogram
     // ------------------------------------
-    //ourShader = new Shader("../Shaders/VertexShader.glsl", "../Shaders/PixelShader.glsl");
-    //juliaShader = new Shader("../Shaders/VertexShader.glsl", "../Shaders/PixelJulia.glsl");
-    //mandelbrotShader = new Shader("../Shaders/VertexShader.glsl", "../Shaders/PixelMandelbrot.glsl");
+    ourShader = new Shader("../Shaders/VertexShader.glsl", "../Shaders/PixelShader.glsl");
+    juliaShader = new Shader("../Shaders/VertexShader.glsl", "../Shaders/PixelJulia.glsl");
+    mandelbrotShader = new Shader("../Shaders/VertexShader.glsl", "../Shaders/PixelMandelbrot.glsl");
 
     // CREATION OF MODELS TO DRAW
     // --------------------------
@@ -159,27 +159,27 @@ void Setup(Scene *scene, Render *render, Camera *camera, EventHandler *eventHand
 
     m1 = new Model();
     m1->setVertex(std::vector<float>(vertices, vertices + sizeof(vertices) / sizeof(vertices[0])));
-    //m1->setShader(mandelbrotShader);
+    m1->setShader(mandelbrotShader);
     scene->addModel(m1);
 
     // create a second object
     m2 = new Model();
     m2->setVertex(std::vector<float>(vertices, vertices + sizeof(vertices) / sizeof(vertices[0])));
-    //m2->setShader(ourShader);
+    m2->setShader(ourShader);
     scene->addModel(m2);
     m2->setPos(glm::vec3(2, 0, 0));
 
     // create a third object
     m3 = new Model();
     m3->setVertex(std::vector<float>(vertices, vertices + sizeof(vertices) / sizeof(vertices[0])));
-    //m3->setShader(mandelbrotShader);
+    m3->setShader(mandelbrotShader);
     scene->addModel(m3);
     m3->setPos(glm::vec3(-2, 0, 0));
 
     // create a fourth object
     m4 = new Model();
     m4->setVertex(std::vector<float>(vertices, vertices + sizeof(vertices) / sizeof(vertices[0])));
-    //m4->setShader(juliaShader);
+    m4->setShader(juliaShader);
     scene->addModel(m4);
     m4->setPos(glm::vec3(0, 2, 0));
 

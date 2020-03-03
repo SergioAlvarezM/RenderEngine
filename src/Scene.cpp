@@ -5,10 +5,11 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "Scene.h"
+#include <Scene.h>
 #include <algorithm>
 
 Scene::Scene() {
+
     this->Models = std::vector<Model *>();
     this->vectorVAO = std::vector<int>();
     this->vectorVBO = std::vector<int>();
@@ -128,7 +129,7 @@ void Scene::addAxis() {
     Model *zAxis = new Model();
 
     // create and set shader
-    Shader *shader = new Shader("./Shaders/Vertex_SimplePosAndColor.glsl", "./Shaders/Pixel_SimplePosAndColor.glsl");
+    Shader *shader = new Shader(this->AXIS_VERTEX_SHADER, this->AXIS_FRAGMENT_SHADER);
     xAxis->setShader(shader);
     yAxis->setShader(shader);
     zAxis->setShader(shader);
