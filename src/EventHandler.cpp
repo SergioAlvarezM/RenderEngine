@@ -22,7 +22,7 @@ void EventHandler::processInput() {
 }
 
 void EventHandler::recalculateTime() {
-    float currentFrame = glfwGetTime();
+    float currentFrame = (float) glfwGetTime();
     this->deltaTime = currentFrame - this->lastFrame;
     this->lastFrame = currentFrame;
 }
