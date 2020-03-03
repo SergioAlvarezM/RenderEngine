@@ -3,7 +3,7 @@
 #define MAXITER 100
 #define PI 3.1415926535897932384626433832795
 
-varying out vec4 fragColor;
+out vec4 fragColor;
 
 uniform vec3 iResolution;
 uniform float iTime;

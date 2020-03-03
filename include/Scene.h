@@ -19,8 +19,8 @@ private:
     std::vector<int> vectorVBOC;
 
     // path to the shaders used by the class
-    const char* AXIS_VERTEX_SHADER = "../Shaders/Vertex_SimplePosAndColor.glsl";
-    const char* AXIS_FRAGMENT_SHADER = "../Shaders/Pixel_SimplePosAndColor.glsl";
+    const char* AXIS_VERTEX_SHADER = "./Shaders/Vertex_SimplePosAndColor.glsl";
+    const char* AXIS_FRAGMENT_SHADER = "./Shaders/Pixel_SimplePosAndColor.glsl";
 
 public:
 

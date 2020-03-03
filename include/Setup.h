@@ -33,9 +33,9 @@ void Setup(Scene *scene, Render *render, Camera *camera, EventHandler *eventHand
 
     // build and compile our shader zprogram
     // ------------------------------------
-    ourShader = new Shader("../Shaders/VertexShader.glsl", "../Shaders/PixelShader.glsl");
-    juliaShader = new Shader("../Shaders/VertexShader.glsl", "../Shaders/PixelJulia.glsl");
-    mandelbrotShader = new Shader("../Shaders/VertexShader.glsl", "../Shaders/PixelMandelbrot.glsl");
+    ourShader = new Shader("./Shaders/VertexShader.glsl", "./Shaders/PixelShader.glsl");
+    juliaShader = new Shader("./Shaders/VertexShader.glsl", "./Shaders/PixelJulia.glsl");
+    mandelbrotShader = new Shader("./Shaders/VertexShader.glsl", "./Shaders/PixelMandelbrot.glsl");
 
     // CREATION OF MODELS TO DRAW
     // --------------------------

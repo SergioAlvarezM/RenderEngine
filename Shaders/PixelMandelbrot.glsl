@@ -1,7 +1,7 @@
 #version 330 core
 #define MAXITER 128
 
-varying out vec4 fragColor;
+out vec4 fragColor;
 
 uniform vec3 iResolution;
 uniform float iTime;

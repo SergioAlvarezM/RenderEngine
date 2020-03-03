@@ -21,19 +21,12 @@ file(GLOB sourcefiles
         "src/*.cpp")
 
 # Copy the files used in the compilation
-file(COPY Shaders/Pixel_SimplePosAndColor.glsl DESTINATION Debug)
-file(COPY Shaders/PixelJulia.glsl DESTINATION Debug)
-file(COPY Shaders/PixelMandelbrot.glsl DESTINATION Debug)
-file(COPY Shaders/PixelShader.glsl DESTINATION Debug)
-file(COPY Shaders/Vertex_SimplePosAndColor.glsl DESTINATION Debug)
-file(COPY Shaders/VertexShader.glsl DESTINATION Debug)
-
-file(COPY Shaders/Pixel_SimplePosAndColor.glsl DESTINATION Release)
-file(COPY Shaders/PixelJulia.glsl DESTINATION Release)
-file(COPY Shaders/PixelMandelbrot.glsl DESTINATION Release)
-file(COPY Shaders/PixelShader.glsl DESTINATION Release)
-file(COPY Shaders/Vertex_SimplePosAndColor.glsl DESTINATION Release)
-file(COPY Shaders/VertexShader.glsl DESTINATION Release)
+file(COPY Shaders/Pixel_SimplePosAndColor.glsl DESTINATION Shaders)
+file(COPY Shaders/PixelJulia.glsl DESTINATION Shaders)
+file(COPY Shaders/PixelMandelbrot.glsl DESTINATION Shaders)
+file(COPY Shaders/PixelShader.glsl DESTINATION Shaders)
+file(COPY Shaders/Vertex_SimplePosAndColor.glsl DESTINATION Shaders)
+file(COPY Shaders/VertexShader.glsl DESTINATION Shaders)
 
 add_executable(RenderEngine src/main.cpp glad.c ${sourcefiles})
 
