@@ -1,18 +1,40 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.10)
 project(RenderEngine)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories("include")
-include_directories("libs/glm")
-include_directories("libs/glad/include")
-
+# Global variables
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
+# Add another projects to compile
 add_subdirectory(libs/glfw-3.3)
 
-add_executable(RenderEngine main.cpp glad.c include/Scene.cpp include/Scene.h include/Render.cpp include/Render.h include/Camera.h include/Shader.h include/EventHandler.cpp include/EventHandler.h include/Model.cpp include/Model.h Setup.h)
+# Add paths to the directories to search for the hpp files
+include_directories("include")
+include_directories("libs/glm")
+include_directories("libs/glad/include")
+
+# Search the source files
+file(GLOB sourcefiles
+        "src/*.cpp")
+
+# Copy the files used in the compilation
+file(COPY Shaders/Pixel_SimplePosAndColor.glsl DESTINATION Debug)
+file(COPY Shaders/PixelJulia.glsl DESTINATION Debug)
+file(COPY Shaders/PixelMandelbrot.glsl DESTINATION Debug)
+file(COPY Shaders/PixelShader.glsl DESTINATION Debug)
+file(COPY Shaders/Vertex_SimplePosAndColor.glsl DESTINATION Debug)
+file(COPY Shaders/VertexShader.glsl DESTINATION Debug)
+
+file(COPY Shaders/Pixel_SimplePosAndColor.glsl DESTINATION Release)
+file(COPY Shaders/PixelJulia.glsl DESTINATION Release)
+file(COPY Shaders/PixelMandelbrot.glsl DESTINATION Release)
+file(COPY Shaders/PixelShader.glsl DESTINATION Release)
+file(COPY Shaders/Vertex_SimplePosAndColor.glsl DESTINATION Release)
+file(COPY Shaders/VertexShader.glsl DESTINATION Release)
+
+add_executable(RenderEngine src/main.cpp glad.c ${sourcefiles})
 
 target_link_libraries(RenderEngine glfw)
