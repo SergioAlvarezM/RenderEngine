@@ -8,22 +8,22 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-
 /*---------------------------------------------------------------------------------------------*/
 //                                 Constructor y destructor
 /*---------------------------------------------------------------------------------------------*/
 
-Render::Render() {
+Render::Render()
+{
     camera = nullptr;
     window = nullptr;
     scene = nullptr;
 }
 
-Render::~Render() {
+Render::~Render()
+{
     // finish glfw when the renderer is detroyed
     glfwTerminate();
 }
-
 
 /*---------------------------------------------------------------------------------------------*/
 //                                 METODOS ESTATICOS
@@ -31,17 +31,18 @@ Render::~Render() {
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
-void Render::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+void Render::framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
     // make sure the viewport matches the new window dimensions; note that width and
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
 
-
 /*---------------------------------------------------------------------------------------------*/
 //                                 METODOS DEL PROPIO OBJETO
 /*---------------------------------------------------------------------------------------------*/
-int Render::init(const int WIDTH, const int HEIGHT) {
+int Render::init(const int WIDTH, const int HEIGHT)
+{
 
     // save the screen size
     // --------------------
@@ -62,7 +63,8 @@ int Render::init(const int WIDTH, const int HEIGHT) {
     // glfw window creation
     // --------------------
     this->window = glfwCreateWindow(WIDTH, HEIGHT, "RenderEngine", NULL, NULL);
-    if (window == NULL) {
+    if (window == NULL)
+    {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
@@ -75,7 +77,8 @@ int Render::init(const int WIDTH, const int HEIGHT) {
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
@@ -87,7 +90,8 @@ int Render::init(const int WIDTH, const int HEIGHT) {
     return 1;
 }
 
-bool Render::isWindowsClosed() {
+bool Render::isWindowsClosed()
+{
 
     // errores
     if (this->window == nullptr)
@@ -96,31 +100,34 @@ bool Render::isWindowsClosed() {
     return glfwWindowShouldClose(this->window);
 }
 
-GLFWwindow *Render::getWindow() {
+GLFWwindow *Render::getWindow()
+{
     return this->window;
 }
 
-void Render::setCamera(Camera *camera) {
+void Render::setCamera(Camera *camera)
+{
     this->camera = camera;
 }
 
-void Render::swapBuffers() {
+void Render::swapBuffers()
+{
 
     // ERRORES
     if (this->window == nullptr)
         error("No se inicializo el render");
 
-
     glfwSwapBuffers(this->getWindow());
-
 }
 
-void Render::clearScreen(float R, float G, float B, float Alpha) {
+void Render::clearScreen(float R, float G, float B, float Alpha)
+{
     glClearColor(R, G, B, Alpha);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Render::drawScene() {
+void Render::drawScene()
+{
 
     //errores
     if (this->camera == nullptr)
@@ -129,25 +136,30 @@ void Render::drawScene() {
     this->scene->drawModels(this->WIDTH, this->HEIGHT, this->camera);
 }
 
-void Render::setScene(Scene *scene) {
+void Render::setScene(Scene *scene)
+{
     this->scene = scene;
 }
 
-void Render::error(std::string msg) {
+void Render::error(std::string msg)
+{
 
-    std::cout << "Error: " << "RENDER: " << msg << std::endl;
-
+    std::cout << "Error: "
+              << "RENDER: " << msg << std::endl;
 }
 
-int Render::getWidth() const {
+int Render::getWidth() const
+{
     return WIDTH;
 }
 
-int Render::getHeight() const {
+int Render::getHeight() const
+{
     return HEIGHT;
 }
 
-void Render::setWindowsTitle(const char *title, bool showFPS) {
+void Render::setWindowsTitle(const char *title, bool showFPS)
+{
 
     // set the parameters.
     this->title = title;
@@ -155,29 +167,29 @@ void Render::setWindowsTitle(const char *title, bool showFPS) {
 
     // change the window with the title
     glfwSetWindowTitle(this->window, title);
-
 }
 
-void Render::updateTitle(EventHandler* eventHandler) {
+void Render::updateTitle(EventHandler *eventHandler)
+{
 
     // only update if the showFPS is true, in other case the title should not change
-    if(this->showFPS){
+    if (this->showFPS)
+    {
 
         // arreglo que tendra el titulo
         char title[100];
 
         // add the title of the application
-        strcpy(title,this->title);
+        strcpy(title, this->title);
 
         // add the separator
         strcat(title, " - ");
 
         // calculate and add the frames
-        std::string frames = std::to_string((int) (1 / eventHandler->getDeltaTime()));
-        strcat(title,frames.c_str());
+        std::string frames = std::to_string((int)(1 / eventHandler->getDeltaTime()));
+        strcat(title, frames.c_str());
 
         // change the title
         glfwSetWindowTitle(this->window, title);
     }
-
 }

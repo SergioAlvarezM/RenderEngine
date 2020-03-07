@@ -8,31 +8,35 @@
 #include <Scene.h>
 #include <algorithm>
 
-Scene::Scene() {
+Scene::Scene()
+{
 
     this->Models = std::vector<Model *>();
-    this->vectorVAO = std::vector<int>();
-    this->vectorVBO = std::vector<int>();
-    this->vectorVBOC = std::vector<int>();
+    this->vectorVAO = std::vector<GLuint>();
+    this->vectorVBO = std::vector<GLuint>();
+    this->vectorVBOC = std::vector<GLuint>();
 }
 
-Scene::~Scene() {
+Scene::~Scene()
+{
 
     // delete all the models
-    for (Model *m : this->Models) {
+    for (Model *m : this->Models)
+    {
         delete m;
     }
-
 }
 
-void Scene::drawModels(int WIDTH, int HEIGHT, Camera *camera) {
+void Scene::drawModels(int WIDTH, int HEIGHT, Camera *camera)
+{
 
     // pass projection matrix to shader (note that in this case it could change every frame)
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float) WIDTH / (float) HEIGHT,
+    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)WIDTH / (float)HEIGHT,
                                             0.1f, 100.0f);
 
     // se dibuja cada moedelo por separado
-    for (int i = 0; i < this->Models.size(); i++) {
+    for (size_t i = 0; i < this->Models.size(); i++)
+    {
 
         Model *m = this->Models.at(i);
 
@@ -58,10 +62,10 @@ void Scene::drawModels(int WIDTH, int HEIGHT, Camera *camera) {
         m->getShader()->setMat4("model", m->getModelMatrix());
         glDrawArrays(m->getDrawType(), 0, m->getVertex().size());
     }
-
 }
 
-void Scene::addModel(Model *m) {
+void Scene::addModel(Model *m)
+{
 
     // add model at the end of the vector
     this->Models.push_back(m);
@@ -74,8 +78,8 @@ void Scene::addModel(Model *m) {
     /* Esta parte se debe modificar si el tipo de los objetos cambia, se deben generar VAOs con la estructura
      * de los objetos.*/
 
-    unsigned int VBOC, VBO, VAO;
-    glGenVertexArrays(this->Models.size(), &VAO); // the id of the VAO and VBO is the length of the Model Buffer
+    GLuint VBOC, VBO, VAO;
+    glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &VBOC);
 
@@ -89,39 +93,40 @@ void Scene::addModel(Model *m) {
     glBindVertexArray(VAO);
 
     // only enable position if the model have positions
-    if (!m->getVertex().empty()) {
+    if (!m->getVertex().empty())
+    {
 
         //  &m->getVertex()[0] entega un puntero al inicio de los elementos
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, m->getVertex().size() * sizeof(float), &m->getVertex()[0], GL_STATIC_DRAW);
 
         // position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
         glEnableVertexAttribArray(0);
-
     }
 
     // only enable color atribute if the model has the array
-    if (!m->getColors().empty()) {
+    if (!m->getColors().empty())
+    {
 
         // color attribute
         glBindBuffer(GL_ARRAY_BUFFER, VBOC);
         glBufferData(GL_ARRAY_BUFFER, m->getColors().size() * sizeof(float), &m->getColors()[0], GL_STATIC_DRAW);
 
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
         glEnableVertexAttribArray(1);
-
     }
-
 }
 
-void Scene::error(std::string msg) {
+void Scene::error(std::string msg)
+{
 
-    std::cout << "Error: " << "SCENE: " << msg << std::endl;
-
+    std::cout << "Error: "
+              << "SCENE: " << msg << std::endl;
 }
 
-void Scene::addAxis() {
+void Scene::addAxis()
+{
 
     // create 3 models
     Model *xAxis = new Model();
@@ -167,21 +172,23 @@ void Scene::addAxis() {
     this->addModel(xAxis);
     this->addModel(yAxis);
     this->addModel(zAxis);
-
 }
 
-void Scene::deleteModel(Model *model) {
+void Scene::deleteModel(Model *model)
+{
 
     int index = -1;
 
     // get the index
     std::vector<Model *>::iterator itr = std::find(this->Models.begin(), this->Models.end(), model);
-    if (itr != this->Models.cend()) {
+    if (itr != this->Models.cend())
+    {
         index = std::distance(this->Models.begin(), itr);
     }
 
     // in case that the model doesnt exist
-    if (index == -1) {
+    if (index == -1)
+    {
         error("Se intento borrar un modelo que no se encuentra en el arreglo");
     }
 
@@ -190,6 +197,4 @@ void Scene::deleteModel(Model *model) {
     this->vectorVBOC.erase(this->vectorVBOC.begin() + index);
     this->vectorVBO.erase(this->vectorVBO.begin() + index);
     this->vectorVAO.erase(this->vectorVAO.begin() + index);
-
 }
-

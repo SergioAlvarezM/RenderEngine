@@ -9,6 +9,10 @@
  * The function setup is called only once y the beggining of the process and the onFrame function will be called
  * in each frame of the aplication.
  */
+
+#ifndef RENDERENGINE_SETUP_H
+#define RENDERENGINE_SETUP_H
+
 #include <Render.h>
 #include <Shader.h>
 #include <Model.h>
@@ -159,13 +163,13 @@ void Setup(Scene *scene, Render *render, Camera *camera, EventHandler *eventHand
 
     m1 = new Model();
     m1->setVertex(std::vector<float>(vertices, vertices + sizeof(vertices) / sizeof(vertices[0])));
-    m1->setShader(mandelbrotShader);
+    m1->setShader(ourShader);
     scene->addModel(m1);
 
     // create a second object
     m2 = new Model();
     m2->setVertex(std::vector<float>(vertices, vertices + sizeof(vertices) / sizeof(vertices[0])));
-    m2->setShader(ourShader);
+    m2->setShader(mandelbrotShader);
     scene->addModel(m2);
     m2->setPos(glm::vec3(2, 0, 0));
 
@@ -199,3 +203,5 @@ void onFrame(Scene *scene, Render *render, Camera *camera, EventHandler *eventHa
     juliaShader->setFloat("iTime", eventHandler->getLastFrame());
     juliaShader->setVec3("iResolution", glm::vec3(render->getWidth(), render->getHeight(), 1));
 }
+
+#endif

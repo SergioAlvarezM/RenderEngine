@@ -25,7 +25,8 @@ Render *render;
 EventHandler *eventHandler;
 Scene *scene;
 
-int main() {
+int main()
+{
 
     // CREATIONS OF THE SCENE
     // ----------------------
@@ -55,14 +56,14 @@ int main() {
 
     // SETUP FUNCTION
     // --------------
-    render->setWindowsTitle("RenderEngine",true);
+    render->setWindowsTitle("RenderEngine", true);
     Setup(scene, render, camera, eventHandler);
 
     // render loop
     // -----------
     int a = 0;
-    while (!render->isWindowsClosed()) {
-
+    while (!render->isWindowsClosed())
+    {
 
         // per-frame time logic
         // --------------------
@@ -107,8 +108,9 @@ int main() {
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
-void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-    camera->ProcessMouseScroll(yoffset);
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
+{
+    camera->ProcessMouseScroll((float)yoffset);
 }
 
 // glfw: whenever the mouse moves, this callback is called
@@ -117,20 +119,20 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
-void mouse_callback(GLFWwindow *window, double xpos, double ypos) {
-    if (firstMouse) {
-        lastX = xpos;
-        lastY = ypos;
+void mouse_callback(GLFWwindow *window, double xpos, double ypos)
+{
+    if (firstMouse)
+    {
+        lastX = (float)xpos;
+        lastY = (float)ypos;
         firstMouse = false;
     }
 
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+    float xoffset = (float)xpos - lastX;
+    float yoffset = lastY - (float)ypos; // reversed since y-coordinates go from bottom to top
 
-    lastX = xpos;
-    lastY = ypos;
+    lastX = (float)xpos;
+    lastY = (float)ypos;
 
     camera->ProcessMouseMovement(xoffset, yoffset);
 }
-
-
