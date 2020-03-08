@@ -11,6 +11,7 @@
 #include <Model.h>
 #include <Scene.h>
 #include <EventHandler.h>
+#include <Setup.h>
 
 // Global variables
 // --------------------------------------------------------------------------------------------

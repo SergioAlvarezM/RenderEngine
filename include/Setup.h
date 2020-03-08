@@ -32,10 +32,10 @@ void Setup(Scene *scene, Render *render, Camera *camera, EventHandler *eventHand
 /**
  * @brief Function called in every frame of the rendering process.
  * 
- * @param scene 
- * @param render 
- * @param camera 
- * @param eventHandler 
+ * @param scene Scene to draw in the engine.
+ * @param render Render object used by the engine.
+ * @param camera Camera used by the engine.
+ * @param eventHandler Handler of the events used by the engine.
  */
 void onFrame(Scene *scene, Render *render, Camera *camera, EventHandler *eventHandler);
 

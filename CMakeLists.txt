@@ -28,6 +28,6 @@ file(COPY Shaders/PixelShader.glsl DESTINATION Shaders)
 file(COPY Shaders/Vertex_SimplePosAndColor.glsl DESTINATION Shaders)
 file(COPY Shaders/VertexShader.glsl DESTINATION Shaders)
 
-add_executable(RenderEngine src/main.cpp glad.c ${sourcefiles})
+add_executable(RenderEngine glad.c ${sourcefiles})
 
 target_link_libraries(RenderEngine glfw)
