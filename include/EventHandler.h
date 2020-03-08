@@ -5,11 +5,17 @@
 #ifndef RENDERENGINE_EVENTHANDLER_H
 #define RENDERENGINE_EVENTHANDLER_H
 
-
 #include <GLFW/glfw3.h>
-#include "Camera.h"
+#include <Camera.h>
 
-class EventHandler {
+/**
+ * @brief Class to process all the events that occurs in the engine.
+ * 
+ * Class that process all the event that happens during the excecution of the engine 
+ * and take action depending of the events. Support Mouse and Keyboard events.
+ */
+class EventHandler
+{
 
 private:
     GLFWwindow *window;
@@ -18,12 +24,11 @@ private:
     float deltaTime = 0;
 
 public:
-
-    // -------------------------
-    /* METHODS OF THE OBJECT */
-    // -------------------------
-
-    /* Metodo que se invoca para actualizar el input que se ingreso en el programa.*/
+    /**
+     * @brief Method to process the keyboard input of the program.
+     * 
+     * Process all the input of the keyboard and do actions depending on the key pressed.
+     */
     void processInput();
 
     /* Metodo que sirve para actualizar las variables lastFrame y deltaTime del motor de rendering */
@@ -57,6 +62,5 @@ public:
 
     ~EventHandler();
 };
-
 
 #endif //RENDERENGINE_EVENTHANDLER_H

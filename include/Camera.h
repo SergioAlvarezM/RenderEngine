@@ -13,26 +13,19 @@
 #include <stdio.h>
 #include <vector>
 
-/**
- * @brief Enum to indicate the posible movements of the camera.
- * 
- * Defines several possible options for camera movement. 
- * Used as abstraction to stay away from window-system specific input methods.
- */
-enum Camera_Movement {
-    FORWARD,
-    BACKWARD,
-    LEFT,
-    RIGHT
-};
-
 // Default camera values
-const float YAW         =  -90.0f;
-const float PITCH       =  0.0f;
-const float SPEED       =  2.5f;
-const float SENSITIVITY =  0.1f;
-const float ZOOM        =  45.0f;
 
+/** 
+ * Initial value of the camera variables.
+ * 
+ * Shouldn't be harcoded. This is only to make the code more readable
+ * and easy to modify.
+ */
+const float YAW = -90.0f;
+const float PITCH = 0.0f;
+const float SPEED = 2.5f;
+const float SENSITIVITY = 0.1f;
+const float ZOOM = 45.0f;
 
 /**
  * @brief Class to control the Camera of the engine.
@@ -44,20 +37,54 @@ class Camera
 {
 public:
     // Camera Attributes
+    //------------------
+
+    //! Position of the camera.
     glm::vec3 Position;
+    //! Direction of the front of the camera.
     glm::vec3 Front;
+    //! Direction of the vertical axis of the camera.
     glm::vec3 Up;
+    //! Direction of the horizontal axis of the camera.
     glm::vec3 Right;
+    //! Direction of the vertical axis of the world.
     glm::vec3 WorldUp;
+
     // Euler Angles
+    //-------------
+
+    //! Rotation in the Y-Axis of the camera.
     float Yaw;
+    //! Rotation in the X-Axis of the camera.
     float Pitch;
+
     // Camera options
+    //---------------
+
+    //! Movement speed of the camera.
     float MovementSpeed;
+    //! Sensivity of the mouse.
     float MouseSensitivity;
+    //! Zoom of the camera view.
     float Zoom;
 
-    // Constructor with vectors
+    /**
+     * @brief Enum to indicate the posible movements of the camera.
+     * 
+     * Defines several possible options for camera movement. 
+     * Used as abstraction to stay away from window-system specific input methods.
+     */
+    enum class Movement
+    {
+        //! Movement towards the front.
+        FORWARD,
+        //! Movement backwards.
+        BACKWARD,
+        //! Movement to the left.
+        LEFT,
+        //! Movement to the right.
+        RIGHT
+    };
 
     /**
      * @brief Construct a new Camera object
@@ -117,8 +144,8 @@ public:
         return glm::lookAt(Position, Position + Front, Up);
     }
 
-    // 
-    
+    //
+
     /**
      * @brief Process the input of the keyboard.
      * 
@@ -128,19 +155,19 @@ public:
      * @param direction Direction in wich the camera is moving.
      * @param deltaTime Amount of time passed since the interaction.
      */
-    void ProcessKeyboard(Camera_Movement direction, float deltaTime)
+    void ProcessKeyboard(Movement direction, float deltaTime)
     {
         float velocity = MovementSpeed * deltaTime;
-        if (direction == FORWARD)
+        if (direction == Movement::FORWARD)
             Position += Front * velocity;
-        if (direction == BACKWARD)
+        if (direction == Movement::BACKWARD)
             Position -= Front * velocity;
-        if (direction == LEFT)
+        if (direction == Movement::LEFT)
             Position -= Right * velocity;
-        if (direction == RIGHT)
+        if (direction == Movement::RIGHT)
             Position += Right * velocity;
     }
-    
+
     /**
      * @brief Process the input received from the mouse.
      * 
@@ -156,7 +183,7 @@ public:
         xoffset *= MouseSensitivity;
         yoffset *= MouseSensitivity;
 
-        Yaw   += xoffset;
+        Yaw += xoffset;
         Pitch += yoffset;
 
         // Make sure that when pitch is out of bounds, screen doesn't get flipped
@@ -190,7 +217,6 @@ public:
     }
 
 private:
-
     /**
      * @brief Recalculate the vectors of the camera.
      * 
@@ -206,8 +232,8 @@ private:
         front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
         Front = glm::normalize(front);
         // Also re-calculate the Right and Up vector
-        Right = glm::normalize(glm::cross(Front, WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-        Up    = glm::normalize(glm::cross(Right, Front));
+        Right = glm::normalize(glm::cross(Front, WorldUp)); // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+        Up = glm::normalize(glm::cross(Right, Front));
     }
 };
 
