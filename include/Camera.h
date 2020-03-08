@@ -13,7 +13,12 @@
 #include <stdio.h>
 #include <vector>
 
-// Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
+/**
+ * @brief Enum to indicate the posible movements of the camera.
+ * 
+ * Defines several possible options for camera movement. 
+ * Used as abstraction to stay away from window-system specific input methods.
+ */
 enum Camera_Movement {
     FORWARD,
     BACKWARD,
@@ -29,7 +34,12 @@ const float SENSITIVITY =  0.1f;
 const float ZOOM        =  45.0f;
 
 
-// An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
+/**
+ * @brief Class to control the Camera of the engine.
+ * 
+ * An abstract camera class that processes input and calculates the corresponding Euler Angles, 
+ * Vectors and Matrices for use in OpenGL.
+ */
 class Camera
 {
 public:
@@ -48,6 +58,19 @@ public:
     float Zoom;
 
     // Constructor with vectors
+
+    /**
+     * @brief Construct a new Camera object
+     * 
+     * Constructor of the Camera object. 
+     * The camera always began looking to the -Z Axis, Y-Axis must be defined in order to 
+     * set correctly the camera coordinate system.
+     * 
+     * @param position Initial position of the camera.
+     * @param up Vector with the direction in the positive z-axis. Can be changed for testing others configurations.
+     * @param yaw Rotation in the Y-Axis.
+     * @param pitch Rotation in the X-Axis.
+     */
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
         Position = position;
@@ -56,7 +79,23 @@ public:
         Pitch = pitch;
         updateCameraVectors();
     }
-    // Constructor with scalar values
+
+    /**
+     * @brief Construct a new Camera object
+     * 
+     * Constructor of the Camera object. 
+     * The camera always began looking to the -Z Axis, Y-Axis must be defined in order to 
+     * set correctly the camera coordinate system.
+     * 
+     * @param posX Position in the X-Axis of the camera.
+     * @param posY Position in the Y-Axis of the camera.
+     * @param posZ Position in the Z-Axis of the camera.
+     * @param upX X component of the vector indicating the Y world axis.
+     * @param upY Y component of the vector indicating the Y world axis.
+     * @param upZ Z component of the vector indicating the Y world axis.
+     * @param yaw Rotation in the Y-Axis.
+     * @param pitch Rotation in the X-Axis.
+     */
     Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
         Position = glm::vec3(posX, posY, posZ);
@@ -66,13 +105,29 @@ public:
         updateCameraVectors();
     }
 
-    // Returns the view matrix calculated using Euler Angles and the LookAt Matrix
+    /**
+     * @brief Get the View Matrix object
+     * 
+     * Returns the view matrix calculated using Euler Angles and the LookAt Matrix.
+     * 
+     * @return glm::mat4 View matrix of the camera.
+     */
     glm::mat4 GetViewMatrix()
     {
         return glm::lookAt(Position, Position + Front, Up);
     }
 
-    // Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
+    // 
+    
+    /**
+     * @brief Process the input of the keyboard.
+     * 
+     * Processes input received from any keyboard-like input system. 
+     * Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
+     * 
+     * @param direction Direction in wich the camera is moving.
+     * @param deltaTime Amount of time passed since the interaction.
+     */
     void ProcessKeyboard(Camera_Movement direction, float deltaTime)
     {
         float velocity = MovementSpeed * deltaTime;
@@ -85,8 +140,17 @@ public:
         if (direction == RIGHT)
             Position += Right * velocity;
     }
-
-    // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.
+    
+    /**
+     * @brief Process the input received from the mouse.
+     * 
+     * Processes input received from a mouse input system. 
+     * Expects the offset value in both the x and y direction.
+     * 
+     * @param xoffset Movement in the X-axis (screen coordinate system).
+     * @param yoffset Movement in the Y-axis (screen coordinate system).
+     * @param constrainPitch When true dont allow to exceed 90 degrees of rotation in the X axis.
+     */
     void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true)
     {
         xoffset *= MouseSensitivity;
@@ -108,7 +172,13 @@ public:
         updateCameraVectors();
     }
 
-    // Processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
+    /**
+     * @brief Process the mouse scroll.
+     * 
+     * Processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
+     * 
+     * @param yoffset Offset of the scroll of the mouse.
+     */
     void ProcessMouseScroll(float yoffset)
     {
         if (Zoom >= 1.0f && Zoom <= 45.0f)
@@ -120,7 +190,13 @@ public:
     }
 
 private:
-    // Calculates the front vector from the Camera's (updated) Euler Angles
+
+    /**
+     * @brief Recalculate the vectors of the camera.
+     * 
+     * Calculates the front vector from the Camera's (updated) Euler Angles, 
+     * also calculates the Right and Up vector of the camera.
+     */
     void updateCameraVectors()
     {
         // Calculate the new Front vector

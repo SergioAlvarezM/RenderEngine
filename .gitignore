@@ -85,5 +85,6 @@ fabric.properties
 
 bin/*
 build/*
+docs/*
 
 .vscode/*
