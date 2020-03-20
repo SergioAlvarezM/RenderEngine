@@ -56,6 +56,19 @@ private:
     //! Name of the model
     std::string name;
 
+    /**
+     * @brief Load a file of type .obj
+     * 
+     * Method to load a .obj file.
+     * 
+     * Load all the characteristic of the .obj into the parameters of the model.
+     * TODO: load ALL the characteristic into the model. (currently only load the vertex and
+     * the first parameter of the face), to do this its necessary to add material to the engine.
+     * 
+     * @param filename Name of the file.
+     */
+    void load_obj(std::string filename);
+
 public:
     /**
      * @brief Construct a new Model object
@@ -99,6 +112,15 @@ public:
      * @return Shader* 
      */
     [[nodiscard]] Shader *getShader() const;
+
+    /**
+     * @brief Load the information from a file.
+     * 
+     * Currently only accepts .obj files.
+     * 
+     * @param filename Name of the file.
+     */
+    void loadFile(std::string filename);
 
     /**
      * @brief Set the Shader object
@@ -176,6 +198,13 @@ public:
      * @param name 
      */
     void setName(std::string &name);
+
+    /**
+     * @brief Method to give an error message
+     * 
+     * @param msg Message
+     */
+    void error(std::string msg);
 };
 
 #endif //RENDERENGINE_MODEL_H

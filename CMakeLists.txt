@@ -27,6 +27,9 @@ file(COPY Shaders/PixelMandelbrot.glsl DESTINATION Shaders)
 file(COPY Shaders/PixelShader.glsl DESTINATION Shaders)
 file(COPY Shaders/Vertex_SimplePosAndColor.glsl DESTINATION Shaders)
 file(COPY Shaders/VertexShader.glsl DESTINATION Shaders)
+file(COPY models/Sofa.obj DESTINATION models)
+file(COPY models/Teapot.obj DESTINATION models)
+file(COPY models/Gastly.obj DESTINATION models)
 
 add_executable(RenderEngine glad.c ${sourcefiles})
 

@@ -16,6 +16,7 @@
 // Global variables
 // --------------------------------------------------------------------------------------------
 Shader *ourShader;
+Shader *other_ourShader;
 Shader *juliaShader;
 Shader *mandelbrotShader;
 
@@ -23,6 +24,7 @@ Model *m1;
 Model *m2;
 Model *m3;
 Model *m4;
+Model *m5;
 
 // Function called only at the beggining
 // --------------------------------------------------------------------------------------------
@@ -32,6 +34,7 @@ void Setup(Scene *scene, Render *render, Camera *camera, EventHandler *eventHand
     // build and compile our shader zprogram
     // ------------------------------------
     ourShader = new Shader("./Shaders/VertexShader.glsl", "./Shaders/PixelShader.glsl");
+    other_ourShader = new Shader("./Shaders/VertexShader.glsl", "./Shaders/PixelShader.glsl");
     juliaShader = new Shader("./Shaders/VertexShader.glsl", "./Shaders/PixelJulia.glsl");
     mandelbrotShader = new Shader("./Shaders/VertexShader.glsl", "./Shaders/PixelMandelbrot.glsl");
 
@@ -180,6 +183,13 @@ void Setup(Scene *scene, Render *render, Camera *camera, EventHandler *eventHand
     m4->setShader(juliaShader);
     scene->addModel(m4);
     m4->setPos(glm::vec3(0, 2, 0));
+
+    // create a fifth object
+    m5 = new Model();
+    m5->loadFile("models/Teapot.obj"); // load vertex
+    m5->setShader(other_ourShader);
+    scene->addModel(m5);
+    m5->setPos(glm::vec3(5, 2, 0));
 
     // add the axis to the scene
     scene->addAxis();

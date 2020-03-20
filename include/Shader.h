@@ -10,9 +10,9 @@
 #include <iterator>
 #include <map>
 
-
 /* Enum para identificar a que tipo de dato corresponden los uniforms del shader */
-enum dataType {
+enum dataType
+{
     U_BOOLEAN,
     U_INTEGER,
     U_FLOAT,
@@ -25,7 +25,8 @@ enum dataType {
 };
 
 /* Estructura que almacena toda la informacion de un uniform en el shader */
-struct UniformData {
+struct UniformData
+{
     bool UD_boolean;
     int UD_integer;
     float UD_float;
@@ -38,7 +39,8 @@ struct UniformData {
     dataType myType;
 };
 
-class Shader {
+class Shader
+{
 public:
     unsigned int ID;
     std::map<std::string, UniformData> myUniforms;
@@ -46,7 +48,8 @@ public:
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
     Shader(const char *vertexPath, const char *fragmentPath, const char *geometryPath = nullptr,
-           const char *computePath = nullptr) {
+           const char *computePath = nullptr)
+    {
 
         // 0. initialize variables
         myUniforms = std::map<std::string, UniformData>();
@@ -65,9 +68,11 @@ public:
         fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
         gShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
         cShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        try {
+        try
+        {
             // if vertex shader path is present, load a vertex shader
-            if (vertexPath != nullptr) {
+            if (vertexPath != nullptr)
+            {
                 vShaderFile.open(vertexPath);
                 std::stringstream vShaderStream;
                 vShaderStream << vShaderFile.rdbuf();
@@ -75,7 +80,8 @@ public:
                 vertexCode = vShaderStream.str();
             }
             // if fragment shader path is present, also load a fragment shader
-            if (fragmentPath != nullptr) {
+            if (fragmentPath != nullptr)
+            {
                 fShaderFile.open(fragmentPath);
                 std::stringstream fShaderStream;
                 fShaderStream << fShaderFile.rdbuf();
@@ -83,7 +89,8 @@ public:
                 fragmentCode = fShaderStream.str();
             }
             // if geometry shader path is present, also load a geometry shader
-            if (geometryPath != nullptr) {
+            if (geometryPath != nullptr)
+            {
                 gShaderFile.open(geometryPath);
                 std::stringstream gShaderStream;
                 gShaderStream << gShaderFile.rdbuf();
@@ -91,7 +98,8 @@ public:
                 geometryCode = gShaderStream.str();
             }
             // if compute shader path is present, also load a compute shader
-            if (computePath != nullptr) {
+            if (computePath != nullptr)
+            {
                 cShaderFile.open(computePath);
                 std::stringstream cShaderStream;
                 cShaderStream << cShaderFile.rdbuf();
@@ -99,13 +107,15 @@ public:
                 computeCode = cShaderStream.str();
             }
         }
-        catch (std::ifstream::failure e) {
+        catch (std::ifstream::failure e)
+        {
             std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
         }
 
         // if vertex shader is given, compile vertex shader
         unsigned int vertex;
-        if (vertexPath != nullptr) {
+        if (vertexPath != nullptr)
+        {
             const char *vShaderCode = vertexCode.c_str();
             vertex = glCreateShader(GL_VERTEX_SHADER);
             glShaderSource(vertex, 1, &vShaderCode, NULL);
@@ -114,7 +124,8 @@ public:
         }
         // if fragment shader is given, compile fragment shader
         unsigned int fragment;
-        if (fragmentPath != nullptr) {
+        if (fragmentPath != nullptr)
+        {
             const char *fShaderCode = fragmentCode.c_str();
             fragment = glCreateShader(GL_FRAGMENT_SHADER);
             glShaderSource(fragment, 1, &fShaderCode, NULL);
@@ -123,7 +134,8 @@ public:
         }
         // if geometry shader is given, compile geometry shader
         unsigned int geometry;
-        if (geometryPath != nullptr) {
+        if (geometryPath != nullptr)
+        {
             const char *gShaderCode = geometryCode.c_str();
             geometry = glCreateShader(GL_GEOMETRY_SHADER);
             glShaderSource(geometry, 1, &gShaderCode, NULL);
@@ -132,7 +144,8 @@ public:
         }
         // if compute shader is given, compile compute shader
         unsigned int compute;
-        if (computePath != nullptr) {
+        if (computePath != nullptr)
+        {
             const char *cShaderCode = computeCode.c_str();
             compute = glCreateShader(GL_COMPUTE_SHADER);
             glShaderSource(compute, 1, &cShaderCode, NULL);
@@ -160,18 +173,19 @@ public:
             glDeleteShader(geometry);
         if (computePath != nullptr)
             glDeleteShader(compute);
-
     }
 
     // activate the shader
     // ------------------------------------------------------------------------
-    void use() {
+    void use()
+    {
         glUseProgram(ID);
     }
 
     // utility uniform functions
     // ------------------------------------------------------------------------
-    void setBool(const std::string &name, bool value) {
+    void setBool(const std::string &name, bool value)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -183,7 +197,8 @@ public:
     }
 
     // ------------------------------------------------------------------------
-    void setInt(const std::string &name, int value) {
+    void setInt(const std::string &name, int value)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -192,11 +207,11 @@ public:
 
         // overwrite information
         myUniforms[name] = uniform;
-
     }
 
     // ------------------------------------------------------------------------
-    void setFloat(const std::string &name, float value) {
+    void setFloat(const std::string &name, float value)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -205,11 +220,11 @@ public:
 
         // overwrite information
         myUniforms[name] = uniform;
-
     }
 
     // ------------------------------------------------------------------------
-    void setVec2(const std::string &name, const glm::vec2 &value) {
+    void setVec2(const std::string &name, const glm::vec2 &value)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -218,10 +233,10 @@ public:
 
         // overwrite information
         myUniforms[name] = uniform;
-
     }
 
-    void setVec2(const std::string &name, float x, float y) {
+    void setVec2(const std::string &name, float x, float y)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -230,11 +245,11 @@ public:
 
         // overwrite information
         myUniforms[name] = uniform;
-
     }
 
     // ------------------------------------------------------------------------
-    void setVec3(const std::string &name, const glm::vec3 &value) {
+    void setVec3(const std::string &name, const glm::vec3 &value)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -243,10 +258,10 @@ public:
 
         // overwrite information
         myUniforms[name] = uniform;
-
     }
 
-    void setVec3(const std::string &name, float x, float y, float z) {
+    void setVec3(const std::string &name, float x, float y, float z)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -255,11 +270,11 @@ public:
 
         // overwrite information
         myUniforms[name] = uniform;
-
     }
 
     // ------------------------------------------------------------------------
-    void setVec4(const std::string &name, const glm::vec4 &value) {
+    void setVec4(const std::string &name, const glm::vec4 &value)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -268,10 +283,10 @@ public:
 
         // overwrite information
         myUniforms[name] = uniform;
-
     }
 
-    void setVec4(const std::string &name, float x, float y, float z, float w) {
+    void setVec4(const std::string &name, float x, float y, float z, float w)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -280,11 +295,11 @@ public:
 
         // overwrite information
         myUniforms[name] = uniform;
-
     }
 
     // ------------------------------------------------------------------------
-    void setMat2(const std::string &name, const glm::mat2 &mat) {
+    void setMat2(const std::string &name, const glm::mat2 &mat)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -293,11 +308,11 @@ public:
 
         // overwrite information
         myUniforms[name] = uniform;
-
     }
 
     // ------------------------------------------------------------------------
-    void setMat3(const std::string &name, const glm::mat3 &mat) {
+    void setMat3(const std::string &name, const glm::mat3 &mat)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -306,11 +321,11 @@ public:
 
         // overwrite information
         myUniforms[name] = uniform;
-
     }
 
     // ------------------------------------------------------------------------
-    void setMat4(const std::string &name, const glm::mat4 &mat) {
+    void setMat4(const std::string &name, const glm::mat4 &mat)
+    {
 
         // create uniform storing the data
         UniformData uniform = UniformData();
@@ -319,82 +334,89 @@ public:
 
         // overwrite information
         myUniforms[name] = uniform;
-
     }
 
     // Set and Update the shaders uniform
     // ------------------------------------------------------------------------
-    void updateUniform() {
+    void updateUniform()
+    {
 
-        for (std::map<std::string, UniformData>::iterator it = myUniforms.begin(); it != myUniforms.end(); ++it) {
+        for (std::map<std::string, UniformData>::iterator it = myUniforms.begin(); it != myUniforms.end(); ++it)
+        {
 
             // we obtain the uniform from the hash
             std::string name = it->first;
             UniformData uniform = it->second;
 
             // identify and define the uniform
-            switch (uniform.myType) {
+            switch (uniform.myType)
+            {
 
-                case U_BOOLEAN:
-                    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int) uniform.UD_boolean);
-                    break;
+            case U_BOOLEAN:
+                glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)uniform.UD_boolean);
+                break;
 
-                case U_INTEGER:
-                    glUniform1i(glGetUniformLocation(ID, name.c_str()), uniform.UD_integer);
-                    break;
+            case U_INTEGER:
+                glUniform1i(glGetUniformLocation(ID, name.c_str()), uniform.UD_integer);
+                break;
 
-                case U_FLOAT:
-                    glUniform1f(glGetUniformLocation(ID, name.c_str()), uniform.UD_float);
-                    break;
+            case U_FLOAT:
+                glUniform1f(glGetUniformLocation(ID, name.c_str()), uniform.UD_float);
+                break;
 
-                case U_VEC2:
-                    glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, &uniform.UD_vec2[0]);
-                    break;
+            case U_VEC2:
+                glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, &uniform.UD_vec2[0]);
+                break;
 
-                case U_VEC3:
-                    glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &uniform.UD_vec3[0]);
-                    break;
+            case U_VEC3:
+                glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &uniform.UD_vec3[0]);
+                break;
 
-                case U_VEC4:
-                    glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, &uniform.UD_vec4[0]);
-                    break;
+            case U_VEC4:
+                glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, &uniform.UD_vec4[0]);
+                break;
 
-                case U_MAT2:
-                    glUniformMatrix2fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &uniform.UD_mat2[0][0]);
-                    break;
+            case U_MAT2:
+                glUniformMatrix2fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &uniform.UD_mat2[0][0]);
+                break;
 
-                case U_MAT3:
-                    glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &uniform.UD_mat3[0][0]);
-                    break;
+            case U_MAT3:
+                glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &uniform.UD_mat3[0][0]);
+                break;
 
-                case U_MAT4:
-                    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &uniform.UD_mat4[0][0]);
-                    break;
-
+            case U_MAT4:
+                glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &uniform.UD_mat4[0][0]);
+                break;
             }
         }
-
     }
-
 
 private:
     // utility function for checking shader compilation/linking errors.
     // ------------------------------------------------------------------------
-    void checkCompileErrors(GLuint shader, std::string type) {
+    void checkCompileErrors(GLuint shader, std::string type)
+    {
         GLint success;
         GLchar infoLog[1024];
-        if (type != "PROGRAM") {
+        if (type != "PROGRAM")
+        {
             glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-            if (!success) {
+            if (!success)
+            {
                 glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog
+                std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n"
+                          << infoLog
                           << "\n -- --------------------------------------------------- -- " << std::endl;
             }
-        } else {
+        }
+        else
+        {
             glGetProgramiv(shader, GL_LINK_STATUS, &success);
-            if (!success) {
+            if (!success)
+            {
                 glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog
+                std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n"
+                          << infoLog
                           << "\n -- --------------------------------------------------- -- " << std::endl;
             }
         }
