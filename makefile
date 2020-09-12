@@ -5,7 +5,7 @@ help:
 	@echo "                                    "
 	@echo "          General Commands           "
 	@echo "          ----------------           "
-	@echo "generate-docs:        Genrate the documentation of the project using the Doxyfile."
+	@echo "generate-docs:        Genrate the documentation of the project using the Doxyfile. (requires doxygen)"
 	@echo ""   
 	@echo "help:                 Display this message."
 
