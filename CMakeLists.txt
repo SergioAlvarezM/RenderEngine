@@ -15,6 +15,7 @@ add_subdirectory(libs/glfw-3.3)
 include_directories("include")
 include_directories("libs/glm")
 include_directories("libs/glad/include")
+include_directories("libs/nanogui")
 
 # Search the source files
 file(GLOB sourcefiles
