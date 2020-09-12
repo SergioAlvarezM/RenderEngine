@@ -7,6 +7,7 @@
 #include "EventHandler.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <cstring>
 
 /*---------------------------------------------------------------------------------------------*/
 //                                 Constructor y destructor
