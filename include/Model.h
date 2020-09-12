@@ -10,10 +10,21 @@
 #include <glm/glm.hpp>
 #include "Shader.h"
 
+/**
+ * @brief Struct to manage the rotation of the models.
+ * 
+ * Structure used in the Model Class to manage the rotation of the models in the scene.
+ * 
+ */
 struct Rotation
 {
+    //! Rotation in the x axis
     float x;
+
+    //! Rotation in the y axis
     float y;
+
+    //! Rotation in the z axis
     float z;
 };
 
@@ -195,14 +206,14 @@ public:
     /**
      * @brief Set the Name object
      * 
-     * @param name 
+     * @param name Name of the model.
      */
     void setName(std::string &name);
 
     /**
      * @brief Method to give an error message
      * 
-     * @param msg Message
+     * @param msg Message to show as an Error.
      */
     void error(std::string msg);
 };
