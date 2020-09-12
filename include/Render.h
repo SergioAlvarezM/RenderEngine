@@ -11,14 +11,21 @@
 #include "Scene.h"
 #include "EventHandler.h"
 
-class Render {
+/**
+ * @brief Class in charge of the main process of rendering a scene.
+ * 
+ * Class in charge of the rendering process of the program and to manage the window.
+ * Join all the other components of the program to make them work together as a whole.
+ * 
+ */
+class Render
+{
 
 private:
-
     /* Variables utiles para el rendering */
     GLFWwindow *window;
     Camera *camera;
-    Scene* scene;
+    Scene *scene;
 
     bool showFPS;
     const char *title;
@@ -27,7 +34,6 @@ private:
     int HEIGHT;
 
 public:
-
     /************************************
      * METODOS UTILES PARA EL RENDERING *
      ************************************/
@@ -77,17 +83,15 @@ public:
     void setWindowsTitle(const char *title, bool showFPS);
 
     /* Metodo para actualizar el titulo, solo debe llamarse para titulos que se actualizan */
-    void updateTitle(EventHandler* eventHandler);
+    void updateTitle(EventHandler *eventHandler);
 
     /* Metodo que sirve para entregar un mensaje de error */
-     void error(std::string msg);
+    void error(std::string msg);
 
-/* Constructor and destructor */
+    /* Constructor and destructor */
     Render();
 
     ~Render();
-
 };
-
 
 #endif //RENDERENGINE_RENDER_H
