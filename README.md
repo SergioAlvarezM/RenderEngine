@@ -4,13 +4,19 @@ Simple render engine to simplify the work with OpenGL.
 
 # How to use
 
-To use this render in user mode you only have to modify the Setup.h file. In this file there is the functions that will be running inside the Engine and that will be called in each frame and at the beggining of the engine. These two functions have all the parameters needed from the Engine.
+To use this render in user mode you only have to modify the Setup.cpp file in the source directory. In this file there are functions that will be running inside the Engine and that will be called in each frame and at the beggining of the engine. These two functions have all the parameters needed from the Engine.
 
 This file already have a small code showing how to use it.
 
 If you need help to know how the engine works below is a small explanation of every class. Also the .h files of each class are commented with explanations of the methods.
 
 There is also a makefile that has inside the most important commands for the project like compile, generate documentation, and other things, run in the console _make_ to show the help message.
+
+# Build Instructions
+
+To build the project use the CMakeLists.txt file too generate the files needed. (remember set the C and CXX enviromental variables).
+
+The project was developed using MinGW in a windows environment, so cannot make sure that it will still works in a linux or mac environment.
 
 # Structure of the Engine
 
