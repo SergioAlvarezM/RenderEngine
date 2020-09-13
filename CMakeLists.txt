@@ -15,10 +15,12 @@ add_subdirectory(libs/glfw-3.3)
 include_directories("include")
 include_directories("libs/glm")
 include_directories("libs/glad/include")
+include_directories("libs/imgui")
 
 # Search the source files
 file(GLOB sourcefiles
-        "src/*.cpp")
+        "src/*.cpp" 
+        "libs/imgui/*.cpp")
 
 # Copy the files used in the compilation
 file(COPY Shaders/Pixel_SimplePosAndColor.glsl DESTINATION Shaders)

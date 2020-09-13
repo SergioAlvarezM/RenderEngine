@@ -5,10 +5,14 @@
 
 #include <Camera.h>
 #include <EventHandler.h>
+#include <GUIManager.h>
 
 #include <iostream>
 
 #include <Setup.h>
+
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_glfw.h>
 
 // Functions that have to be global due to GLFW
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
@@ -24,6 +28,7 @@ Camera *camera;
 Render *render;
 EventHandler *eventHandler;
 Scene *scene;
+GUIManager *guiManager;
 
 int main()
 {
@@ -54,6 +59,11 @@ int main()
     eventHandler->setMouseCallback(mouse_callback);
     eventHandler->setScrollCallback(scroll_callback);
 
+    // CREATION OF THE GUI MANAGER
+    // ---------------------------
+    guiManager = new GUIManager();
+    guiManager->init(render->getWindow());
+
     // SETUP FUNCTION
     // --------------
     render->setWindowsTitle("RenderEngine", true);
@@ -81,6 +91,12 @@ int main()
         render->clearScreen(0.2f, 0.3f, 0.3f, 1.0f);
         render->drawScene();
 
+        // gui
+        // ---
+        guiManager->generateFrame();
+        imgui_onFrame();
+        guiManager->render();
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         render->swapBuffers();
@@ -98,6 +114,10 @@ int main()
     delete camera;
     delete eventHandler;
     delete scene;
+
+    // imgui: terminate imgui process
+    // ------------------------------
+    guiManager->destroy();
 
     return 0;
 }

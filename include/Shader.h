@@ -10,7 +10,10 @@
 #include <iterator>
 #include <map>
 
-/* Enum para identificar a que tipo de dato corresponden los uniforms del shader */
+/**
+ * @brief Enum to indetify the types of the Uniforms for the shaders.
+ * 
+ */
 enum dataType
 {
     U_BOOLEAN,
@@ -24,29 +27,59 @@ enum dataType
     U_MAT4
 };
 
-/* Estructura que almacena toda la informacion de un uniform en el shader */
+/**
+ * @brief Store all the information of an uniform in the shader.
+ * 
+ */
 struct UniformData
 {
+    //! Boolean uniform data
     bool UD_boolean;
+    //! Integer uniform data
     int UD_integer;
+    //! float uniform data
     float UD_float;
+    //! two dimensional vector uniform data
     glm::vec2 UD_vec2;
+    //! three dimensional vector uniform data
     glm::vec3 UD_vec3;
+    //! four dimensional vector uniform data
     glm::vec4 UD_vec4;
+    //! 2x2 matrix uniform data
     glm::mat2 UD_mat2;
+    //! 3x3 matrix uniform data
     glm::mat3 UD_mat3;
+    //! 4x4 matrix uniform data
     glm::mat4 UD_mat4;
+    //! type of the data stored in the struct (all other are null)
     dataType myType;
 };
 
+/**
+ * @brief Class in charge of the managment of the shaders in the models and in the rendering process.
+ * 
+ * Class contains all the methods to add uniforms to the shaders and to compile them in the render process.
+ * 
+ * Currently accept four shaders: Pixel, Fragment, Geometry and Compute shaders.
+ * 
+ */
 class Shader
 {
 public:
+    //! ID of the shader program
     unsigned int ID;
+
+    //! Map of uniforms in the shader
     std::map<std::string, UniformData> myUniforms;
 
-    // constructor generates the shader on the fly
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Construct a new Shader object
+     * 
+     * @param vertexPath Path to the code of the vertex shader.
+     * @param fragmentPath Path to the code of the fragment shader.
+     * @param geometryPath Path to the code of the geometry shader.
+     * @param computePath Path to the code of the compute shader.
+     */
     Shader(const char *vertexPath, const char *fragmentPath, const char *geometryPath = nullptr,
            const char *computePath = nullptr)
     {
@@ -175,15 +208,22 @@ public:
             glDeleteShader(compute);
     }
 
-    // activate the shader
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Set the shader as the one to use in OpenGL.
+     * 
+     * glUseProgram(Shader->ID)
+     */
     void use()
     {
         glUseProgram(ID);
     }
 
-    // utility uniform functions
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Set a Bool uniform in the shader.
+     * 
+     * @param name Name of the uniform.
+     * @param value Value of the uniform.
+     */
     void setBool(const std::string &name, bool value)
     {
 
@@ -196,7 +236,12 @@ public:
         myUniforms[name] = uniform;
     }
 
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Set a Int uniform in the shader.
+     * 
+     * @param name Name of the uniform.
+     * @param value Value of the uniform.
+     */
     void setInt(const std::string &name, int value)
     {
 
@@ -209,7 +254,12 @@ public:
         myUniforms[name] = uniform;
     }
 
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Set a Float uniform in the shader.
+     * 
+     * @param name Name of the uniform.
+     * @param value Value of the uniform.
+     */
     void setFloat(const std::string &name, float value)
     {
 
@@ -222,7 +272,12 @@ public:
         myUniforms[name] = uniform;
     }
 
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Set a two dimensional vector uniform in the shader.
+     * 
+     * @param name Name of the uniform.
+     * @param value Value of the uniform.
+     */
     void setVec2(const std::string &name, const glm::vec2 &value)
     {
 
@@ -235,6 +290,13 @@ public:
         myUniforms[name] = uniform;
     }
 
+    /**
+     * @brief Set a two dimensional vector uniform in the shader.
+     * 
+     * @param name Name of the uniform.
+     * @param x First value of the vector.
+     * @param y Second value of the vector.
+     */
     void setVec2(const std::string &name, float x, float y)
     {
 
@@ -247,7 +309,12 @@ public:
         myUniforms[name] = uniform;
     }
 
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Set a tree dimensional vector uniform in the shader.
+     * 
+     * @param name Name of the uniform.
+     * @param value Value of the uniform.
+     */
     void setVec3(const std::string &name, const glm::vec3 &value)
     {
 
@@ -260,6 +327,14 @@ public:
         myUniforms[name] = uniform;
     }
 
+    /**
+     * @brief Set a tree dimensional vector uniform in the shader.
+     * 
+     * @param name Name of the uniform.
+     * @param x First value of the vector.
+     * @param y Seconds value of the vector.
+     * @param z Third value of the vector.
+     */
     void setVec3(const std::string &name, float x, float y, float z)
     {
 
@@ -272,7 +347,12 @@ public:
         myUniforms[name] = uniform;
     }
 
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Set a four dimensional vector uniform in the shader.
+     * 
+     * @param name Name of the uniform.
+     * @param value Value of the uniform.
+     */
     void setVec4(const std::string &name, const glm::vec4 &value)
     {
 
@@ -285,6 +365,15 @@ public:
         myUniforms[name] = uniform;
     }
 
+    /**
+     * @brief Set a four dimensional vector uniform in the shader.
+     * 
+     * @param name Name of the uniform
+     * @param x First value of the vector.
+     * @param y Seconds value of the vector.
+     * @param z Third value of the vector.
+     * @param w Fourth value of the vector.
+     */
     void setVec4(const std::string &name, float x, float y, float z, float w)
     {
 
@@ -297,7 +386,12 @@ public:
         myUniforms[name] = uniform;
     }
 
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Set a 2x2 matrix as a uniform.
+     * 
+     * @param name Name of the uniform.
+     * @param mat Value of the uniform.
+     */
     void setMat2(const std::string &name, const glm::mat2 &mat)
     {
 
@@ -310,7 +404,12 @@ public:
         myUniforms[name] = uniform;
     }
 
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Set a 3x3 matrix as a uniform.
+     * 
+     * @param name Name of the uniform.
+     * @param mat Value of the uniform.
+     */
     void setMat3(const std::string &name, const glm::mat3 &mat)
     {
 
@@ -323,7 +422,12 @@ public:
         myUniforms[name] = uniform;
     }
 
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Set a 4x4 matrix as a uniform.
+     * 
+     * @param name Name of the uniform.
+     * @param mat Value of the uniform.
+     */
     void setMat4(const std::string &name, const glm::mat4 &mat)
     {
 
@@ -336,8 +440,12 @@ public:
         myUniforms[name] = uniform;
     }
 
-    // Set and Update the shaders uniform
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Update the values of the uniform with the actualized data of the variables.
+     * 
+     * This method should be called every frame, otherwise, the data of the uniforms in the shaders 
+     * is not updated in the program.
+     */
     void updateUniform()
     {
 
@@ -392,8 +500,12 @@ public:
     }
 
 private:
-    // utility function for checking shader compilation/linking errors.
-    // ------------------------------------------------------------------------
+    /**
+     * @brief Check if there are error in the compilation of the shader.
+     * 
+     * @param shader Shader to check for compile errors.
+     * @param type Type of the shader to analize.
+     */
     void checkCompileErrors(GLuint shader, std::string type)
     {
         GLint success;

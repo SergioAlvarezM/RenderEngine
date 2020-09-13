@@ -8,7 +8,7 @@
 #include <vector>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
-#include "Shader.h"
+#include <Shader.h>
 
 /**
  * @brief Struct to manage the rotation of the models.
@@ -99,28 +99,28 @@ public:
      * Get the Model matrix for the model (world coordinates). The rotations are applied in 
      * the following order: X->Y->Z
      * 
-     * @return glm::mat4 
+     * @return glm::mat4 Model matrix to use to render the object.
      */
     glm::mat4 getModelMatrix();
 
     /**
      * @brief Get the Vertex object
      * 
-     * @return const std::vector<float>& 
+     * @return const std::vector<float>& Vertex vector of the model.
      */
     [[nodiscard]] const std::vector<float> &getVertex() const;
 
     /**
      * @brief Set the Vertex object
      * 
-     * @param vector 
+     * @param vector Vector of vertex to be used in the model.
      */
     void setVertex(const std::vector<float> &vector);
 
     /**
      * @brief Get the Shader object
      * 
-     * @return Shader* 
+     * @return Shader* Shader used in the model for rendering.
      */
     [[nodiscard]] Shader *getShader() const;
 
@@ -136,70 +136,70 @@ public:
     /**
      * @brief Set the Shader object
      * 
-     * @param pShader 
+     * @param pShader Shader to be used in the model.
      */
     void setShader(Shader *pShader);
 
     /**
      * @brief Get the Pos object
      * 
-     * @return const glm::vec3& 
+     * @return const glm::vec3& Position of the model.
      */
     [[nodiscard]] const glm::vec3 &getPos() const;
 
     /**
      * @brief Set the Pos object
      * 
-     * @param position 
+     * @param position New position of the model.
      */
     void setPos(const glm::vec3 &position);
 
     /**
      * @brief Get the Rot object
      * 
-     * @return const Rotation& 
+     * @return const Rotation& Rotation of the model.
      */
     [[nodiscard]] const Rotation &getRot() const;
 
     /**
      * @brief Set the Rot object
      * 
-     * @param rotation 
+     * @param rotation New rotation of the model.
      */
     void setRot(const Rotation &rotation);
 
     /**
      * @brief Get the Colors object
      * 
-     * @return const std::vector<float>& 
+     * @return const std::vector<float>& Vector with the color of the vertex of the model.
      */
     const std::vector<float> &getColors() const;
 
     /**
      * @brief Set the Colors object
      * 
-     * @param colors 
+     * @param colors Vector with the colors of the vertex of the model.
      */
     void setColors(const std::vector<float> &colors);
 
     /**
      * @brief Get the Draw Type object
      * 
-     * @return GLint 
+     * @return GLint Type of drawing of the model. (See OpenGL options)
      */
     GLint getDrawType() const;
 
     /**
      * @brief Set the Draw Type object
      * 
-     * @param drawType 
+     * @param drawType Type of drawing of the model. (See OpenGL options)
      */
     void setDrawType(GLint drawType);
 
     /**
      * @brief Get the Name object
      * 
-     * @return const std::string& 
+     * @return const std::string& Name of the model.
      */
     const std::string &getName();
 

@@ -13,6 +13,9 @@
 #include <EventHandler.h>
 #include <Setup.h>
 
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_glfw.h>
+
 // Global variables
 // --------------------------------------------------------------------------------------------
 Shader *ourShader;
@@ -206,4 +209,19 @@ void onFrame(Scene *scene, Render *render, Camera *camera, EventHandler *eventHa
 
     juliaShader->setFloat("iTime", eventHandler->getLastFrame());
     juliaShader->setVec3("iResolution", glm::vec3(render->getWidth(), render->getHeight(), 1));
+}
+
+// Function called in every frame
+// --------------------------------------------------------------------------------------------
+void imgui_onFrame()
+{
+    // window
+    ImGui::Begin("Demo window");
+    ImGui::Button("Hello!");
+    ImGui::End();
+
+    // window
+    ImGui::Begin("Demo window ajajajajjaja long");
+    ImGui::Button("Hello!");
+    ImGui::End();
 }

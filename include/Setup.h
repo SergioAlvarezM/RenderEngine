@@ -39,4 +39,10 @@ void Setup(Scene *scene, Render *render, Camera *camera, EventHandler *eventHand
  */
 void onFrame(Scene *scene, Render *render, Camera *camera, EventHandler *eventHandler);
 
+/**
+ * @brief Function called on each frame to manage the imgui interface.
+ * 
+ */
+void imgui_onFrame();
+
 #endif
