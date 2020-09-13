@@ -10,7 +10,10 @@
 #include <iterator>
 #include <map>
 
-/* Enum para identificar a que tipo de dato corresponden los uniforms del shader */
+/**
+ * @brief Enum to indetify the types of the Uniforms for the shaders.
+ * 
+ */
 enum dataType
 {
     U_BOOLEAN,
@@ -24,18 +27,31 @@ enum dataType
     U_MAT4
 };
 
-/* Estructura que almacena toda la informacion de un uniform en el shader */
+/**
+ * @brief Store all the information of an uniform in the shader.
+ * 
+ */
 struct UniformData
 {
+    //! Boolean uniform data
     bool UD_boolean;
+    //! Integer uniform data
     int UD_integer;
+    //! float uniform data
     float UD_float;
+    //! two dimensional vector uniform data
     glm::vec2 UD_vec2;
+    //! three dimensional vector uniform data
     glm::vec3 UD_vec3;
+    //! four dimensional vector uniform data
     glm::vec4 UD_vec4;
+    //! 2x2 matrix uniform data
     glm::mat2 UD_mat2;
+    //! 3x3 matrix uniform data
     glm::mat3 UD_mat3;
+    //! 4x4 matrix uniform data
     glm::mat4 UD_mat4;
+    //! type of the data stored in the struct (all other are null)
     dataType myType;
 };
 
