@@ -23,9 +23,9 @@ public:
     /**
     * @brief Initialize all the parameters for the GUI to be displayed on the window.
     * 
-    * Initialize IMGUI to be displayed in the screen of the window.
+    * Initialize IMGUI to be displayed in the screen of the window. Window can be changed with the setWindow method.
     * 
-    * @param window 
+    * @param window Window to use in the rendering process.
     */
     void init(GLFWwindow *window);
 
