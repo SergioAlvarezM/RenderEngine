@@ -8,7 +8,7 @@
 #include <vector>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
-#include "Shader.h"
+#include <Shader.h>
 
 /**
  * @brief Struct to manage the rotation of the models.
