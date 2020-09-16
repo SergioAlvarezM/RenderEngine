@@ -1,6 +1,13 @@
-//
-// Created by sergi on 29/10/2019.
-//
+/**
+ * @file EventHandler.h
+ * @author Sergio Alvarez Medina (ser.alvarez1998@gmail.com)
+ * @brief File with the EventHandler class. Manage all the events of the engine.
+ * @version 0.1
+ * @date 2020-09-16
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
 #ifndef RENDERENGINE_EVENTHANDLER_H
 #define RENDERENGINE_EVENTHANDLER_H
