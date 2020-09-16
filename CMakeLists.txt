@@ -13,6 +13,7 @@ add_subdirectory(libs/glfw-3.3)
 
 # Add paths to the directories to search for the hpp files
 include_directories("include")
+include_directories("include/engine")
 include_directories("libs/glm")
 include_directories("libs/glad/include")
 include_directories("libs/imgui")
@@ -20,6 +21,7 @@ include_directories("libs/imgui")
 # Search the source files
 file(GLOB sourcefiles
         "src/*.cpp" 
+        "src/engine/*.cpp"
         "libs/imgui/*.cpp")
 
 # Copy the files used in the compilation

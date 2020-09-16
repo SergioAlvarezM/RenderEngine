@@ -7,8 +7,8 @@
 
 #include <vector>
 #include <GLFW/glfw3.h>
-#include "Model.h"
-#include "Camera.h"
+#include <Model.h>
+#include <Camera.h>
 
 /**
  * @brief Class in charge of the scene of the render engine.

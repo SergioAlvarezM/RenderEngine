@@ -7,9 +7,9 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "Camera.h"
-#include "Scene.h"
-#include "EventHandler.h"
+#include <Camera.h>
+#include <Scene.h>
+#include <EventHandler.h>
 
 /**
  * @brief Class in charge of the main process of rendering a scene.
