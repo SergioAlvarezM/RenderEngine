@@ -5,6 +5,7 @@
 #ifndef RENDERENGINE_CAMERA_H
 #define RENDERENGINE_CAMERA_H
 
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -12,8 +13,6 @@
 
 #include <stdio.h>
 #include <vector>
-
-// Default camera values
 
 /** 
  * Initial value of the camera variables.

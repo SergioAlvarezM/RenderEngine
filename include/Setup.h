@@ -1,7 +1,3 @@
-//
-// Created by sergi on 17/11/2019.
-//
-
 /** Code Instructions
  *
  * This code is the one that will be excecuted in the beggining and in each frame.

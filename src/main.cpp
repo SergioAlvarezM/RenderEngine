@@ -1,32 +1,15 @@
-#include <Render.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
 #include <glm/glm.hpp>
 
-#include <Camera.h>
-#include <EventHandler.h>
-#include <GUIManager.h>
-
 #include <iostream>
-
 #include <Setup.h>
 
 #include <Settings.h>
+#include <Controller.h>
 
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
-
-// Functions that have to be global due to GLFW
-void mouse_callback(GLFWwindow *window, double xpos, double ypos);
-
-void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
-
-// camera and render
-Camera *camera;
-Render *render;
-EventHandler *eventHandler;
-Scene *scene;
-GUIManager *guiManager;
 
 int main()
 {
@@ -118,33 +101,4 @@ int main()
     guiManager->destroy();
 
     return 0;
-}
-
-/*----------------------------------------------------------------------- ---------------------------------*/
-/*------------------------FUNCIONES QUE SE DEBEN DECLARAR DE FORMA GLOBAL ---------------------------------*/
-/*----------------------------------------------------------------------- ---------------------------------*/
-
-// glfw: whenever the mouse scroll wheel scrolls, this callback is called
-// ----------------------------------------------------------------------
-void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
-{
-    camera->ProcessMouseScroll((float)yoffset);
-}
-
-void mouse_callback(GLFWwindow *window, double xpos, double ypos)
-{
-    if (firstMouse)
-    {
-        lastX = (float)xpos;
-        lastY = (float)ypos;
-        firstMouse = false;
-    }
-
-    float xoffset = (float)xpos - lastX;
-    float yoffset = lastY - (float)ypos; // reversed since y-coordinates go from bottom to top
-
-    lastX = (float)xpos;
-    lastY = (float)ypos;
-
-    camera->ProcessMouseMovement(xoffset, yoffset);
 }

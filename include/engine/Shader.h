@@ -1,6 +1,7 @@
 #ifndef RENDERENGINE_SHADER_H
 #define RENDERENGINE_SHADER_H
 
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 
 #include <string>

@@ -5,8 +5,11 @@
 #ifndef RENDERENGINE_EVENTHANDLER_H
 #define RENDERENGINE_EVENTHANDLER_H
 
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <Camera.h>
+
+
 
 /**
  * @brief Class to process all the events that occurs in the engine.

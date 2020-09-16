@@ -1,10 +1,7 @@
-//
-// Created by sergi on 28/10/2019.
-//
-
-#include "Render.h"
-#include "Camera.h"
-#include "EventHandler.h"
+#include <Render.h>
+#include <Camera.h>
+#include <EventHandler.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <cstring>

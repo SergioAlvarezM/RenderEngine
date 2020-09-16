@@ -6,7 +6,6 @@
 #define RENDERENGINE_MODEL_H
 
 #include <vector>
-#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <Shader.h>
 
