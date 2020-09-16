@@ -112,6 +112,18 @@ public:
     }
 
     /**
+     * @brief Set the Keyboard Callback object.
+     * 
+     * Set the callback function for the keyboards events.
+     * 
+     * @param method Method to execute when a key event happens.
+     */
+    void setKeyboardCallback(GLFWkeyfun method)
+    {
+        glfwSetKeyCallback(this->window, method);
+    }
+
+    /**
      * @brief Set the Window object.
      * 
      * @param window Window object that is being used by the engine.

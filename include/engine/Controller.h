@@ -35,6 +35,22 @@ void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 }
 
 /**
+ * @brief Callback for the keyboard buttons.
+ * 
+ * Do nothing for the moment.
+ * 
+ * @param window Window to use.
+ * @param key Key pressed.
+ * @param scancode Key code.
+ * @param action Action done in the key (GLFW_PRESS, GLFW_REPEAT or GLFW_RELEASE).
+ * @param mods Modifier bits.
+ */
+void keyboard_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    return;
+}
+
+/**
  * @brief Callback function for the mouse movement that does nothing.
  * 
  * @param window Window to be used.

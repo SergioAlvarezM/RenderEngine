@@ -40,6 +40,7 @@ int main()
     eventHandler->setMouseCallback(mouse_callback_do_nothing);
     eventHandler->setScrollCallback(scroll_callback);
     eventHandler->setMouseButtonCallback(mouse_button_callback_do_nothing);
+    eventHandler->setKeyboardCallback(keyboard_callback);
 
     // CREATION OF THE GUI MANAGER
     // ---------------------------
