@@ -11,6 +11,8 @@
 
 #include <Setup.h>
 
+#include <Settings.h>
+
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
 
@@ -18,10 +20,6 @@
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
-
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
 
 // camera and render
 Camera *camera;
@@ -132,12 +130,6 @@ void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
     camera->ProcessMouseScroll((float)yoffset);
 }
-
-// glfw: whenever the mouse moves, this callback is called
-// -------------------------------------------------------
-float lastX = SCR_WIDTH / 2.0f;
-float lastY = SCR_HEIGHT / 2.0f;
-bool firstMouse = true;
 
 void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 {
