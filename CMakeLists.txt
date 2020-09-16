@@ -21,7 +21,6 @@ include_directories("libs/imgui")
 # Search the source files
 file(GLOB sourcefiles
         "src/*.cpp" 
-        "src/engine/*.cpp"
         "libs/imgui/*.cpp")
 
 # Copy the files used in the compilation

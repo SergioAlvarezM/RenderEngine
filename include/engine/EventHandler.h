@@ -9,8 +9,6 @@
 #include <GLFW/glfw3.h>
 #include <Camera.h>
 
-
-
 /**
  * @brief Class to process all the events that occurs in the engine.
  * 
@@ -36,14 +34,33 @@ public:
      * 
      * Process all the input of the keyboard and do actions depending on the key pressed.
      */
-    void processInput();
+    void processInput()
+    {
+
+        if (glfwGetKey(this->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+            glfwSetWindowShouldClose(this->window, true);
+
+        if (glfwGetKey(this->window, GLFW_KEY_W) == GLFW_PRESS)
+            this->camera->ProcessKeyboard(Camera::Movement::FORWARD, this->deltaTime);
+        if (glfwGetKey(this->window, GLFW_KEY_S) == GLFW_PRESS)
+            this->camera->ProcessKeyboard(Camera::Movement::BACKWARD, this->deltaTime);
+        if (glfwGetKey(this->window, GLFW_KEY_A) == GLFW_PRESS)
+            this->camera->ProcessKeyboard(Camera::Movement::LEFT, this->deltaTime);
+        if (glfwGetKey(this->window, GLFW_KEY_D) == GLFW_PRESS)
+            this->camera->ProcessKeyboard(Camera::Movement::RIGHT, this->deltaTime);
+    }
 
     /**
      * @brief Update the variables that control the timing of the engine.
      * 
      * Update the lastFrame and deltaTime variables.
      */
-    void recalculateTime();
+    void recalculateTime()
+    {
+        float currentFrame = (float)glfwGetTime();
+        this->deltaTime = currentFrame - this->lastFrame;
+        this->lastFrame = currentFrame;
+    }
 
     /**
     * @brief Call glfw to get the events that happened in the engine.
@@ -52,7 +69,10 @@ public:
     * has never been called then obtain all the events that happened since the 
     * beggining of the engine.
     */
-    void getEvents();
+    void getEvents()
+    {
+        glfwPollEvents();
+    }
 
     /**
      * @brief Set the Mouse Callback object.
@@ -62,7 +82,10 @@ public:
      * 
      * @param method Method to execute when a mouse event is encounter.
      */
-    void setMouseCallback(GLFWcursorposfun method);
+    void setMouseCallback(GLFWcursorposfun method)
+    {
+        glfwSetCursorPosCallback(this->window, method);
+    }
 
     /**
      * @brief Set the Scroll Callback object.
@@ -72,21 +95,30 @@ public:
      * 
      * @param method Method to execute when a mouse scroll event is encounter.
      */
-    void setScrollCallback(GLFWscrollfun method);
+    void setScrollCallback(GLFWscrollfun method)
+    {
+        glfwSetScrollCallback(this->window, method);
+    }
 
     /**
      * @brief Set the Window object.
      * 
      * @param window Window object that is being used by the engine.
      */
-    void setWindow(GLFWwindow *window);
+    void setWindow(GLFWwindow *window)
+    {
+        this->window = window;
+    }
 
     /**
      * @brief Set the Camera object.
      * 
      * @param camera Camera object that is being used by the engine.
      */
-    void setCamera(Camera *camera);
+    void setCamera(Camera *camera)
+    {
+        this->camera = camera;
+    }
 
     /**
      * @brief Get the Last Frame variable.
@@ -95,7 +127,10 @@ public:
      * 
      * @return float Time when the last frame was executed.
      */
-    float getLastFrame() const;
+    float getLastFrame() const
+    {
+        return lastFrame;
+    }
 
     /**
      * @brief Get the Delta Time variable.
@@ -104,19 +139,22 @@ public:
      * 
      * @return float Time between last frame and current frame.
      */
-    float getDeltaTime() const;
+    float getDeltaTime() const
+    {
+        return deltaTime;
+    }
 
     /**
      * @brief Construct a new Event Handler object
      * 
      */
-    EventHandler();
+    EventHandler() {}
 
     /**
      * @brief Destroy the Event Handler object
      * 
      */
-    ~EventHandler();
+    ~EventHandler() {}
 };
 
 #endif //RENDERENGINE_EVENTHANDLER_H
