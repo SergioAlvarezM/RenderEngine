@@ -17,6 +17,7 @@ include_directories("include/engine")
 include_directories("libs/glm")
 include_directories("libs/glad/include")
 include_directories("libs/imgui")
+include_directories("libs/spdlog-1.x/include")
 
 # Search the source files
 file(GLOB sourcefiles

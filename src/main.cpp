@@ -37,8 +37,9 @@ int main()
     eventHandler = new EventHandler();
     eventHandler->setCamera(camera);
     eventHandler->setWindow(render->getWindow());
-    eventHandler->setMouseCallback(mouse_callback);
+    eventHandler->setMouseCallback(mouse_callback_do_nothing);
     eventHandler->setScrollCallback(scroll_callback);
+    eventHandler->setMouseButtonCallback(mouse_button_callback_do_nothing);
 
     // CREATION OF THE GUI MANAGER
     // ---------------------------

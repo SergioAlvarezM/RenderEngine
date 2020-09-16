@@ -15,6 +15,9 @@
 #include <Scene.h>
 #include <EventHandler.h>
 #include <Setup.h>
+#include <stdio.h>
+#include <spdlog/spdlog.h>
+#include <Controller.h>
 
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
@@ -239,7 +242,16 @@ void imgui_onFrame()
 
     // window
     ImGui::Begin("Demo window ajajajajjaja long");
-    ImGui::Button("Hello!");
+    if (ImGui::Button("View Mode"))
+    {
+        spdlog::info("Pressed the button for view mode.");
+        eventHandler->setMouseButtonCallback(mouse_button_callback);
+    }
+    if (ImGui::Button("GUI Mode"))
+    {
+        spdlog::info("Pressed the button for GUI mode.");
+        eventHandler->setMouseButtonCallback(mouse_button_callback_do_nothing);
+    }
     ImGui::End();
 }
 

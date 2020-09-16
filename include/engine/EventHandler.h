@@ -8,6 +8,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <Camera.h>
+#include <stdio.h>
 
 /**
  * @brief Class to process all the events that occurs in the engine.
@@ -88,6 +89,16 @@ public:
     }
 
     /**
+     * @brief Set the Mouse Button Callback object.
+     * 
+     * @param method Method to be called when there is a mouse callback.
+     */
+    void setMouseButtonCallback(GLFWmousebuttonfun method)
+    {
+        glfwSetMouseButtonCallback(this->window, method);
+    }
+
+    /**
      * @brief Set the Scroll Callback object.
      * 
      * Set the Mouse Scroll Event callback function to excecute in a Mouse Scroll 
@@ -142,6 +153,16 @@ public:
     float getDeltaTime() const
     {
         return deltaTime;
+    }
+
+    /**
+     * @brief Print a message of information in the console.
+     * 
+     * @param message Message to be printed
+     */
+    void info(std::string message)
+    {
+        std::cout << "EventHandler::" << message << std::endl;
     }
 
     /**
