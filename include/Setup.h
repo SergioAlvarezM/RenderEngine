@@ -1,9 +1,17 @@
-/** Code Instructions
- *
+/**
+ * @file Setup.h
+ * @author Sergio Alvarez Medina (ser.alvarez1998@gmail.com)
+ * @brief File with the three main functions that the user must define to use the engine.
+ * @version 0.1
+ * @date 2020-09-16
+ * 
+ * @copyright Copyright (c) 2020
+ * 
  * This code is the one that will be excecuted in the beggining and in each frame.
  *
  * The function setup is called only once y the beggining of the process and the onFrame function will be called
- * in each frame of the aplication.
+ * in each frame of the aplication. Also the function imgui_onFrame executes in each frame too, but this function is
+ * intented to manage the GUI (using the imgui library).
  */
 
 #ifndef RENDERENGINE_SETUP_H
