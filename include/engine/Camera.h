@@ -1,6 +1,17 @@
-//
-// Created by sergi on 28/10/2019.
-//
+/**
+ * @file Camera.h
+ * @author Sergio Alvarez Medina (ser.alvarez1998@gmail.com)
+ * @brief File with the definition of the of the camera class.
+ * @version 0.1
+ * @date 2020-09-16
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ * File with the class Camera and all its global variables.
+ * 
+ * The camera is designed to be a 3D camera in the engine with all its configurations defined
+ * at the beginning of the file.
+ */
 
 #ifndef RENDERENGINE_CAMERA_H
 #define RENDERENGINE_CAMERA_H
@@ -14,16 +25,19 @@
 #include <stdio.h>
 #include <vector>
 
-/** 
- * Initial value of the camera variables.
- * 
- * Shouldn't be harcoded. This is only to make the code more readable
- * and easy to modify.
- */
+//! YAW angle of the camera. (rotation in the y-axis)
 const float YAW = -90.0f;
+
+//! PITCH angle of the camera. (rotation in the x-axis)
 const float PITCH = 0.0f;
+
+//! Speed of the camera for the movements in each frame.
 const float SPEED = 2.5f;
+
+//! Sensitivity of the camera related to the rotation.
 const float SENSITIVITY = 0.1f;
+
+//! Zoom of the camera related to the zoom.
 const float ZOOM = 45.0f;
 
 /**
