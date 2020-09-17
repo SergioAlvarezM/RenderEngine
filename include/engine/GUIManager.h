@@ -1,3 +1,14 @@
+/**
+ * @file GUIManager.h
+ * @author Sergio Alvarez Medina (ser.alvarez1998@gamil.com)
+ * @brief File in charge of the GUI of the application (Uses ImGUI library).
+ * @version 0.1
+ * @date 2020-09-17
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #ifndef RENDERENGINE_GUIMANAGER_H
 #define RENDERENGINE_GUIMANAGER_H
 
