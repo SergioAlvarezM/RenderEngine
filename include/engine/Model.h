@@ -1,6 +1,13 @@
-//
-// Created by sergi on 02/11/2019.
-//
+/**
+ * @file Model.h
+ * @author Sergio Alvarez Medina (ser.alvarez1998@gmail.com)
+ * @brief File with the defiunition of the Rotation struct and the Model class.
+ * @version 0.1
+ * @date 2020-09-18
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
 #ifndef RENDERENGINE_MODEL_H
 #define RENDERENGINE_MODEL_H
@@ -12,6 +19,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <Model.h>
 #include <Utils.h>
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 /**
  * @brief Struct to manage the rotation of the models.
@@ -57,6 +67,15 @@ private:
 
     //! Rotation of the model
     Rotation rot{};
+
+    //! VAO of the model
+    GLuint VAO;
+
+    //! VBO of the model
+    GLuint VBO;
+
+    //! VBOC of the model (for colors)
+    GLuint VBOC;
 
     //! vector of vertex to be draw
     std::vector<float> vertex;
@@ -167,6 +186,10 @@ public:
         /* No shader */
         shader = nullptr;
 
+        glGenVertexArrays(1, &this->VAO);
+        glGenBuffers(1, &this->VBO);
+        glGenBuffers(1, &this->VBOC);
+
         /* Draw triangles by default */
         drawType = GL_TRIANGLES;
     }
@@ -220,7 +243,45 @@ public:
      */
     void setVertex(const std::vector<float> &vector)
     {
+        glBindVertexArray(this->VAO);
+        glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
+        glBufferData(GL_ARRAY_BUFFER, vector.size() * sizeof(float), &vector[0], GL_STATIC_DRAW);
+
+        // position attribute
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+        glEnableVertexAttribArray(0);
+
         this->vertex = vector;
+    }
+
+    /**
+     * @brief Get the VAO of the model.
+     * 
+     * @return GLuint Vertex Atribute Object id.
+     */
+    GLuint getVAO()
+    {
+        return this->VAO;
+    }
+
+    /**
+     * @brief Get the VBO of the model.
+     * 
+     * @return GLuint Vertex Buffer Object id.
+     */
+    GLuint getVBO()
+    {
+        return this->VBO;
+    }
+
+    /**
+     * @brief Get the VBOC of the model.
+     * 
+     * @return GLuint Vertex Buffer Object id.
+     */
+    GLuint getVBOC()
+    {
+        return this->VBOC;
     }
 
     /**
@@ -320,7 +381,14 @@ public:
      */
     void setColors(const std::vector<float> &colors)
     {
-        Model::colors = colors;
+        glBindVertexArray(this->VAO);
+        glBindBuffer(GL_ARRAY_BUFFER, this->VBOC);
+        glBufferData(GL_ARRAY_BUFFER, colors.size() * sizeof(float), &colors[0], GL_STATIC_DRAW);
+
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+        glEnableVertexAttribArray(1);
+
+        this->colors = colors;
     }
 
     /**

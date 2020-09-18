@@ -1,6 +1,13 @@
-//
-// Created by sergi on 28/10/2019.
-//
+/**
+ * @file Scene.h
+ * @author your name (you@domain.com)
+ * @brief File with the Scene class definition.
+ * @version 0.1
+ * @date 2020-09-18
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
 #ifndef RENDERENGINE_SCENE_H
 #define RENDERENGINE_SCENE_H
@@ -32,15 +39,6 @@ private:
     //! Vector with model in the scene.
     std::vector<Model *> Models;
 
-    //! Vector with the VAO objects for the render and the shaders.
-    std::vector<GLuint> vectorVAO;
-
-    //! Vector with the VBO object of the models.
-    std::vector<GLuint> vectorVBO;
-
-    //! Vector with the VBO object storing the colors of the models.
-    std::vector<GLuint> vectorVBOC;
-
     //! Path to the pixel shader used to draw the axis
     const char *AXIS_VERTEX_SHADER = "./Shaders/Vertex_SimplePosAndColor.glsl";
 
@@ -56,9 +54,6 @@ public:
     {
 
         this->Models = std::vector<Model *>();
-        this->vectorVAO = std::vector<GLuint>();
-        this->vectorVBO = std::vector<GLuint>();
-        this->vectorVBOC = std::vector<GLuint>();
     }
 
     /**
@@ -106,7 +101,7 @@ public:
                 error("Modelo de nombre " + m->getName() + " no tiene vertices");
 
             // use the correct VAO
-            glBindVertexArray(this->vectorVAO.at(i));
+            glBindVertexArray(m->getVAO());
 
             // we use the shader
             m->getShader()->use();
@@ -136,65 +131,9 @@ public:
      */
     void addModel(Model *m)
     {
-
         // add model at the end of the vector
         this->Models.push_back(m);
-
-        /////////////////////////
-        // GENERATE VAO AND VBO//
-        /////////////////////////
-
-        /* WARNING */
-        /* Esta parte se debe modificar si el tipo de los objetos cambia, se deben generar VAOs con la estructura
-     * de los objetos.*/
-
-        GLuint VBOC, VBO, VAO;
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-        glGenBuffers(1, &VBOC);
-
-        // add vao and vbo to the vectors
-        // the vector stores copies, but the VAO and VBO variables are pointers, there isnt a problem
-        // but probably that could generate bugs
-        this->vectorVAO.push_back(VAO);
-        this->vectorVBO.push_back(VBO);
-        this->vectorVBOC.push_back(VBOC);
-
-        glBindVertexArray(VAO);
-
-        // only enable position if the model have positions
-        if (!m->getVertex().empty())
-        {
-
-            //  &m->getVertex()[0] entega un puntero al inicio de los elementos
-            glBindBuffer(GL_ARRAY_BUFFER, VBO);
-            glBufferData(GL_ARRAY_BUFFER, m->getVertex().size() * sizeof(float), &m->getVertex()[0], GL_STATIC_DRAW);
-
-            // position attribute
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
-            glEnableVertexAttribArray(0);
-        }
-
-        // only enable color atribute if the model has the array
-        if (!m->getColors().empty())
-        {
-
-            // color attribute
-            glBindBuffer(GL_ARRAY_BUFFER, VBOC);
-            glBufferData(GL_ARRAY_BUFFER, m->getColors().size() * sizeof(float), &m->getColors()[0], GL_STATIC_DRAW);
-
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
-            glEnableVertexAttribArray(1);
-        }
     }
-
-    /***********************/
-    /* GETTERS AND SETTERS */
-    /***********************/
-
-    /*********
-     * UTILS *
-     *********/
 
     /**
      * @brief Delete the model from the scene.
@@ -224,9 +163,6 @@ public:
 
         // delete the elements in the array
         this->Models.erase(this->Models.begin() + index);
-        this->vectorVBOC.erase(this->vectorVBOC.begin() + index);
-        this->vectorVBO.erase(this->vectorVBO.begin() + index);
-        this->vectorVAO.erase(this->vectorVAO.begin() + index);
     }
 
     /**
