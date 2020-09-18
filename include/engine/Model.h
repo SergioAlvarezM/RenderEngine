@@ -164,7 +164,7 @@ private:
             }
         }
 
-        this->vertex = vertices_triangles;
+        this->setVertex(vertices_triangles);
     }
 
 public:
