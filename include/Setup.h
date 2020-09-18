@@ -177,11 +177,6 @@ void imgui_onFrame()
 {
     // window
     ImGui::Begin("Demo window");
-    ImGui::Button("Hello!");
-    ImGui::End();
-
-    // window
-    ImGui::Begin("Demo window ajajajajjaja long");
     if (ImGui::Button("View Mode"))
     {
         spdlog::info("Pressed the button for view mode.");

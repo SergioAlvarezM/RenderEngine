@@ -7,6 +7,7 @@
 
 #include <Settings.h>
 #include <Controller.h>
+#include <spdlog/spdlog.h>
 
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
@@ -55,6 +56,7 @@ int main()
     // render loop
     // -----------
     int a = 0;
+    GLenum err;
     while (!render->isWindowsClosed())
     {
 
@@ -84,6 +86,13 @@ int main()
         // -------------------------------------------------------------------------------
         render->swapBuffers();
         eventHandler->getEvents();
+
+        // OpenGL: Check for errors
+        // ------------------------
+        while ((err = glGetError()) != GL_NO_ERROR)
+        {
+            spdlog::error("OpenGL ERROR: " + err);
+        }
     }
 
     // optional: de-allocate all resources once they've outlived their purpose:
