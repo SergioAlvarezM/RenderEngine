@@ -87,39 +87,11 @@ public:
      */
     void drawModels(int WIDTH, int HEIGHT, Camera *camera)
     {
-
-        // pass projection matrix to shader (note that in this case it could change every frame)
-        glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)WIDTH / (float)HEIGHT,
-                                                0.1f, 100.0f);
-
         // se dibuja cada moedelo por separado
         for (size_t i = 0; i < this->Models.size(); i++)
         {
-
             Model *m = this->Models.at(i);
-
-            if (m->getVertex().size() == 0)
-                spdlog::error("Modelo de nombre " + m->getName() + " no tiene vertices");
-
-            // use the correct VAO
-            glBindVertexArray(m->getVAO());
-
-            // we use the shader
-            m->getShader()->use();
-            m->getShader()->setMat4("projection", projection);
-
-            // the uniforms are only available to the shader that is in use
-            // so we must update them in every change.
-            m->getShader()->updateUniform();
-
-            // camera/view transformation
-            glm::mat4 view = camera->GetViewMatrix();
-            m->getShader()->setMat4("view", view);
-
-            // render boxes
-            m->getShader()->setMat4("model", m->getModelMatrix());
-
-            glDrawElements(m->getDrawType(), m->getIndexes().size(), GL_UNSIGNED_INT, 0);
+            m->draw(WIDTH, HEIGHT, camera);
         }
     }
 

@@ -50,6 +50,7 @@ struct Rotation
  *      - Vector with the vertices.
  *      - A pointer to the shaders to be used.
  *      - Position of the model in the scene.
+ *      - Vector with the indexes of the vertex vector to be drawn.
  * 
  * If the element have those attributes the Scene must be able to draw the element. All the 
  * elements that should be drawed by the scene should inherit from this class.
@@ -185,6 +186,45 @@ public:
     }
 
     /**
+     * @brief Draw the model on the screen using the configured characteristics.
+     * 
+     * 
+     * @param WIDTH width of the screen to calculate the aspect for the camera.
+     * @param HEIGHT height of the screen to calculate the aspect of the camera.
+     * @param camera Camera object to draw the elements in the scene.
+     */
+    void draw(int WIDTH, int HEIGHT, Camera *camera)
+    {
+
+        if (this->getVertex().size() == 0)
+            spdlog::error("Modelo de nombre " + this->getName() + " no tiene vertices");
+
+        // pass projection matrix to shader (note that in this case it could change every frame)
+        glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)WIDTH / (float)HEIGHT,
+                                                0.1f, 100.0f);
+
+        // use the correct VAO
+        glBindVertexArray(this->getVAO());
+
+        // we use the shader
+        this->getShader()->use();
+        this->getShader()->setMat4("projection", projection);
+
+        // the uniforms are only available to the shader that is in use
+        // so we must update them in every change.
+        this->getShader()->updateUniform();
+
+        // camera/view transformation
+        glm::mat4 view = camera->GetViewMatrix();
+        this->getShader()->setMat4("view", view);
+
+        // render
+        this->getShader()->setMat4("model", this->getModelMatrix());
+
+        glDrawElements(this->getDrawType(), this->getIndexes().size(), GL_UNSIGNED_INT, 0);
+    }
+
+    /**
      * @brief Get the Model Matrix object in world cooordinates
      * 
      * Get the Model matrix for the model (world coordinates). The rotations are applied in 
@@ -261,46 +301,6 @@ public:
     }
 
     /**
-     * @brief Get the VAO of the model.
-     * 
-     * @return GLuint Vertex Atribute Object id.
-     */
-    GLuint getVAO()
-    {
-        return this->VAO;
-    }
-
-    /**
-     * @brief Get the VBO of the model.
-     * 
-     * @return GLuint Vertex Buffer Object id.
-     */
-    GLuint getVBO()
-    {
-        return this->VBO;
-    }
-
-    /**
-     * @brief Get the EBO of the model.
-     * 
-     * @return GLuint Element Buffer Object id.
-     */
-    GLuint getEBO()
-    {
-        return this->EBO;
-    }
-
-    /**
-     * @brief Get the VBOC of the model.
-     * 
-     * @return GLuint Vertex Buffer Object id.
-     */
-    GLuint getVBOC()
-    {
-        return this->VBOC;
-    }
-
-    /**
      * @brief Get the Shader object
      * 
      * @return Shader* Shader used in the model for rendering.
@@ -326,7 +326,7 @@ public:
         }
         else
         {
-            this->error("Model could not be loaded. Incorrect format...");
+            spdlog::error("Model could not be loaded. Incorrect format...");
         }
     }
 
@@ -408,16 +408,6 @@ public:
     }
 
     /**
-     * @brief Get the Draw Type object
-     * 
-     * @return GLint Type of drawing of the model. (See OpenGL options)
-     */
-    GLint getDrawType() const
-    {
-        return drawType;
-    }
-
-    /**
      * @brief Set the Draw Type object
      * 
      * @param drawType Type of drawing of the model. (See OpenGL options)
@@ -425,16 +415,6 @@ public:
     void setDrawType(GLint drawType)
     {
         Model::drawType = drawType;
-    }
-
-    /**
-     * @brief Get the Name object
-     * 
-     * @return const std::string& Name of the model.
-     */
-    const std::string &getName()
-    {
-        return name;
     }
 
     /**
@@ -448,14 +428,63 @@ public:
     }
 
     /**
-     * @brief Method to give an error message
+     * @brief Get the VAO of the model.
      * 
-     * @param msg Message to show as an Error.
+     * @return GLuint Vertex Atribute Object id.
      */
-    void error(std::string msg)
+    GLuint getVAO()
     {
-        std::cout << "Error: "
-                  << "SCENE: " << msg << std::endl;
+        return this->VAO;
+    }
+
+    /**
+     * @brief Get the VBO of the model.
+     * 
+     * @return GLuint Vertex Buffer Object id.
+     */
+    GLuint getVBO()
+    {
+        return this->VBO;
+    }
+
+    /**
+     * @brief Get the EBO of the model.
+     * 
+     * @return GLuint Element Buffer Object id.
+     */
+    GLuint getEBO()
+    {
+        return this->EBO;
+    }
+
+    /**
+     * @brief Get the VBOC of the model.
+     * 
+     * @return GLuint Vertex Buffer Object id.
+     */
+    GLuint getVBOC()
+    {
+        return this->VBOC;
+    }
+
+    /**
+     * @brief Get the Name object
+     * 
+     * @return const std::string& Name of the model.
+     */
+    const std::string &getName()
+    {
+        return name;
+    }
+
+    /**
+     * @brief Get the Draw Type object
+     * 
+     * @return GLint Type of drawing of the model. (See OpenGL options)
+     */
+    GLint getDrawType() const
+    {
+        return drawType;
     }
 };
 
