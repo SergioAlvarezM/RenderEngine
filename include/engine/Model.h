@@ -46,7 +46,7 @@ struct Rotation
 /**
  * @brief General class that has all the elements that must be draw in the scene.
  * 
- * For an element to be draw it must have 3 attributes:
+ * For an element to be draw it must have 4 attributes:
  *      - Vector with the vertices.
  *      - A pointer to the shaders to be used.
  *      - Position of the model in the scene.
@@ -221,7 +221,7 @@ public:
         // render
         this->getShader()->setMat4("model", this->getModelMatrix());
 
-        glDrawElements(this->getDrawType(), this->getIndexes().size(), GL_UNSIGNED_INT, 0);
+        glDrawElements(this->getDrawType(), this->getVertexIndex().size(), GL_UNSIGNED_INT, 0);
     }
 
     /**
@@ -295,7 +295,7 @@ public:
      * 
      * @return const std::vector<float>& Indexes to be used in the model for render.
      */
-    const std::vector<unsigned int> &getIndexes()
+    const std::vector<unsigned int> &getVertexIndex()
     {
         return this->indexes;
     }
@@ -308,6 +308,16 @@ public:
     [[nodiscard]] Shader *getShader() const
     {
         return shader;
+    }
+
+    /**
+     * @brief Set the Shader object
+     * 
+     * @param pShader Shader to be used in the model.
+     */
+    void setShader(Shader *pShader)
+    {
+        this->shader = pShader;
     }
 
     /**
@@ -328,16 +338,6 @@ public:
         {
             spdlog::error("Model could not be loaded. Incorrect format...");
         }
-    }
-
-    /**
-     * @brief Set the Shader object
-     * 
-     * @param pShader Shader to be used in the model.
-     */
-    void setShader(Shader *pShader)
-    {
-        this->shader = pShader;
     }
 
     /**
@@ -408,6 +408,16 @@ public:
     }
 
     /**
+     * @brief Get the Draw Type object
+     * 
+     * @return GLint Type of drawing of the model. (See OpenGL options)
+     */
+    GLint getDrawType() const
+    {
+        return drawType;
+    }
+
+    /**
      * @brief Set the Draw Type object
      * 
      * @param drawType Type of drawing of the model. (See OpenGL options)
@@ -415,6 +425,16 @@ public:
     void setDrawType(GLint drawType)
     {
         Model::drawType = drawType;
+    }
+
+    /**
+     * @brief Get the Name object
+     * 
+     * @return const std::string& Name of the model.
+     */
+    const std::string &getName()
+    {
+        return name;
     }
 
     /**
@@ -465,26 +485,6 @@ public:
     GLuint getVBOC()
     {
         return this->VBOC;
-    }
-
-    /**
-     * @brief Get the Name object
-     * 
-     * @return const std::string& Name of the model.
-     */
-    const std::string &getName()
-    {
-        return name;
-    }
-
-    /**
-     * @brief Get the Draw Type object
-     * 
-     * @return GLint Type of drawing of the model. (See OpenGL options)
-     */
-    GLint getDrawType() const
-    {
-        return drawType;
     }
 };
 
