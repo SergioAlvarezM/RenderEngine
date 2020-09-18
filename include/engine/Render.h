@@ -1,3 +1,14 @@
+/**
+ * @file Render.h
+ * @author Sergio Alvarez Medina (ser.alvarez1998@gmail.com)
+ * @brief File with the definition of the render class, main class of the engine.
+ * @version 0.1
+ * @date 2020-09-18
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #ifndef RENDERENGINE_RENDER_H
 #define RENDERENGINE_RENDER_H
 

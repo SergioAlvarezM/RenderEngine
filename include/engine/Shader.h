@@ -1,4 +1,14 @@
-#ifndef RENDERENGINE_SHADER_H
+/**
+ * @file Shader.h
+ * @author Sergio Alvarez Medina And LearnOpenGL (ser.alvarez1998@gmail.com and https://learnopengl.com/)
+ * @brief File with the definition of the Shader class, the dataType enum and the UniformData Struct. 
+ * @version 0.1
+ * @date 2020-09-18
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #define RENDERENGINE_SHADER_H
 
 #include <glad/glad.h>

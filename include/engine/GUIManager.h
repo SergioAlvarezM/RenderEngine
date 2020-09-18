@@ -1,3 +1,14 @@
+/**
+ * @file GUIManager.h
+ * @author Sergio Alvarez Medina (ser.alvarez1998@gmail.com)
+ * @brief File with the definition of the GUIManager class. (control the GUI of the engine)
+ * @version 0.1
+ * @date 2020-09-18
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #ifndef RENDERENGINE_GUIMANAGER_H
 #define RENDERENGINE_GUIMANAGER_H
 

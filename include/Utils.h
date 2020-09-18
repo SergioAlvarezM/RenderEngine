@@ -1,3 +1,14 @@
+/**
+ * @file Utils.h
+ * @author Sergio Alvarez Medina (ser.alvarez1998@gmail.com)
+ * @brief File with the utility functions that the engine uses.
+ * @version 0.1
+ * @date 2020-09-18
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #ifndef RENDERENGINE_UTILS_H
 #define RENDERENGINE_UTILS_H
 
