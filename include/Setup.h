@@ -26,6 +26,9 @@
 #include <stdio.h>
 #include <spdlog/spdlog.h>
 #include <Controller.h>
+#include <spdlog/spdlog.h>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
@@ -66,129 +69,56 @@ void Setup(Scene *scene, Render *render, Camera *camera, EventHandler *eventHand
 
     // vertex of a cube
     float vertices[] = {
-        -0.5f,
-        -0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
-        -0.5f,
-        0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        0.5f,
-        -0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
-        -0.5f,
-        -0.5f,
-        -0.5f,
-
-        -0.5f,
-        -0.5f,
-        0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        0.5f,
-        -0.5f,
-        -0.5f,
-        0.5f,
-
-        -0.5f,
-        0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
-        -0.5f,
-        -0.5f,
-        -0.5f,
-        -0.5f,
-        -0.5f,
-        -0.5f,
-        -0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        0.5f,
-
-        0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-
-        -0.5f,
-        -0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
-        -0.5f,
-        -0.5f,
-
-        -0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        0.5f,
-        -0.5f,
-        0.5f,
-        -0.5f,
+        -0.5,
+        -0.5,
+        -0.5,
+        0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        0.5,
+        -0.5,
+        0.5,
+        0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        0.5,
+        0.5,
+        -0.5,
+        0.5,
+        -0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
     };
+
+    unsigned int index[] = {
+        4, 5, 6,
+        6, 5, 7,
+        5, 7, 1,
+        7, 1, 3,
+        4, 5, 0,
+        0, 5, 1,
+        2, 6, 3,
+        6, 7, 3,
+        4, 0, 6,
+        6, 0, 2,
+        0, 1, 2,
+        2, 1, 3};
 
     m1 = new Model();
     m1->setVertex(std::vector<float>(vertices, vertices + sizeof(vertices) / sizeof(vertices[0])));
+    m1->setVertexIndex(std::vector<unsigned int>(index, index + sizeof(index) / sizeof(index[0])));
     m1->setShader(ourShader);
     scene->addModel(m1);
 
     // create a second object
     m2 = new Model();
     m2->setVertex(std::vector<float>(vertices, vertices + sizeof(vertices) / sizeof(vertices[0])));
+    m2->setVertexIndex(std::vector<unsigned int>(index, index + sizeof(index) / sizeof(index[0])));
     m2->setShader(mandelbrotShader);
     scene->addModel(m2);
     m2->setPos(glm::vec3(2, 0, 0));
@@ -196,6 +126,7 @@ void Setup(Scene *scene, Render *render, Camera *camera, EventHandler *eventHand
     // create a third object
     m3 = new Model();
     m3->setVertex(std::vector<float>(vertices, vertices + sizeof(vertices) / sizeof(vertices[0])));
+    m3->setVertexIndex(std::vector<unsigned int>(index, index + sizeof(index) / sizeof(index[0])));
     m3->setShader(mandelbrotShader);
     scene->addModel(m3);
     m3->setPos(glm::vec3(-2, 0, 0));
@@ -203,6 +134,7 @@ void Setup(Scene *scene, Render *render, Camera *camera, EventHandler *eventHand
     // create a fourth object
     m4 = new Model();
     m4->setVertex(std::vector<float>(vertices, vertices + sizeof(vertices) / sizeof(vertices[0])));
+    m4->setVertexIndex(std::vector<unsigned int>(index, index + sizeof(index) / sizeof(index[0])));
     m4->setShader(juliaShader);
     scene->addModel(m4);
     m4->setPos(glm::vec3(0, 2, 0));

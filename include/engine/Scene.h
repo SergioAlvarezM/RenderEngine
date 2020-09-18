@@ -22,6 +22,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <Scene.h>
 #include <algorithm>
+#include <spdlog/spdlog.h>
 
 /**
  * @brief Class in charge of the scene of the render engine.
@@ -98,7 +99,7 @@ public:
             Model *m = this->Models.at(i);
 
             if (m->getVertex().size() == 0)
-                error("Modelo de nombre " + m->getName() + " no tiene vertices");
+                spdlog::error("Modelo de nombre " + m->getName() + " no tiene vertices");
 
             // use the correct VAO
             glBindVertexArray(m->getVAO());
@@ -117,7 +118,8 @@ public:
 
             // render boxes
             m->getShader()->setMat4("model", m->getModelMatrix());
-            glDrawArrays(m->getDrawType(), 0, m->getVertex().size());
+
+            glDrawElements(m->getDrawType(), m->getIndexes().size(), GL_UNSIGNED_INT, 0);
         }
     }
 
@@ -158,7 +160,7 @@ public:
         // in case that the model doesnt exist
         if (index == -1)
         {
-            error("Se intento borrar un modelo que no se encuentra en el arreglo");
+            spdlog::error("Se intento borrar un modelo que no se encuentra en el arreglo");
         }
 
         // delete the elements in the array
@@ -209,6 +211,12 @@ public:
         yAxis->setDrawType(GL_LINES);
         zAxis->setDrawType(GL_LINES);
 
+        // set indexes
+        std::vector<unsigned int> index = {0, 1};
+        xAxis->setVertexIndex(index);
+        yAxis->setVertexIndex(index);
+        zAxis->setVertexIndex(index);
+
         xAxis->setPos(glm::vec3(0, 0, 0));
         yAxis->setPos(glm::vec3(0, 0, 0));
         zAxis->setPos(glm::vec3(0, 0, 0));
@@ -217,18 +225,6 @@ public:
         this->addModel(xAxis);
         this->addModel(yAxis);
         this->addModel(zAxis);
-    }
-
-    /**
-     * @brief Print a personalized error message.
-     * 
-     * @param msg Print a personalized error message in the standart output.
-     */
-    void error(std::string msg)
-    {
-
-        std::cout << "Error: "
-                  << "SCENE: " << msg << std::endl;
     }
 };
 

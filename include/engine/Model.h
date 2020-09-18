@@ -23,6 +23,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <spdlog/spdlog.h>
+
 /**
  * @brief Struct to manage the rotation of the models.
  * 
@@ -77,11 +79,17 @@ private:
     //! VBOC of the model (for colors)
     GLuint VBOC;
 
+    //! EBO of the model (For index of vertexs)
+    GLuint EBO;
+
     //! vector of vertex to be draw
     std::vector<float> vertex;
 
     //! vector of the colors of each vertex
     std::vector<float> colors;
+
+    //! indices of the vertex to be draw (to use in OpenGL)
+    std::vector<unsigned int> indexes;
 
     //! type of drawing to be used by openGL (usually GL_TRIANGLES)
     GLint drawType;
@@ -106,8 +114,8 @@ private:
         std::string line = "";
         std::vector<std::string> parsed_line;
 
-        std::vector<std::vector<float>> vertices;
-        std::vector<std::vector<int>> faces;
+        std::vector<float> vertices;
+        std::vector<unsigned int> indexes;
 
         while (std::getline(infile, line))
         {
@@ -120,51 +128,21 @@ private:
 
             if (parsed_line[0].compare("v") == 0)
             {
-                std::vector<float> new_vertex;
-                new_vertex.push_back(std::stof(parsed_line[1]));
-                new_vertex.push_back(std::stof(parsed_line[2]));
-                new_vertex.push_back(std::stof(parsed_line[3]));
-
-                vertices.push_back(new_vertex);
+                vertices.push_back(std::stof(parsed_line[1]));
+                vertices.push_back(std::stof(parsed_line[2]));
+                vertices.push_back(std::stof(parsed_line[3]));
             }
 
             if (parsed_line[0].compare("f") == 0)
             {
-                std::vector<int> face;
-
-                for (int i = 1; i < parsed_line.size(); i++)
-                {
-                    // faces can also have this format: f 6/4/1 3/5/3 7/6/5
-                    std::string pos_vertex = split(parsed_line[i], '/')[0];
-
-                    face.push_back(std::stoi(pos_vertex));
-                }
-
-                faces.push_back(face);
+                indexes.push_back(std::stof(parsed_line[1]) - 1);
+                indexes.push_back(std::stof(parsed_line[2]) - 1);
+                indexes.push_back(std::stof(parsed_line[3]) - 1);
             }
         }
 
-        std::vector<float> vertices_triangles;
-        for (std::vector<int> face : faces)
-        {
-            for (int i = 1; i + 1 < face.size(); i++)
-            {
-                // indexes in the faces start from 1 and not from 0
-                vertices_triangles.push_back(vertices[face[0] - 1][0]);
-                vertices_triangles.push_back(vertices[face[0] - 1][1]);
-                vertices_triangles.push_back(vertices[face[0] - 1][2]);
-
-                vertices_triangles.push_back(vertices[face[i] - 1][0]);
-                vertices_triangles.push_back(vertices[face[i] - 1][1]);
-                vertices_triangles.push_back(vertices[face[i] - 1][2]);
-
-                vertices_triangles.push_back(vertices[face[i + 1] - 1][0]);
-                vertices_triangles.push_back(vertices[face[i + 1] - 1][1]);
-                vertices_triangles.push_back(vertices[face[i + 1] - 1][2]);
-            }
-        }
-
-        this->setVertex(vertices_triangles);
+        this->setVertexIndex(indexes);
+        this->setVertex(vertices);
     }
 
 public:
@@ -189,6 +167,7 @@ public:
         glGenVertexArrays(1, &this->VAO);
         glGenBuffers(1, &this->VBO);
         glGenBuffers(1, &this->VBOC);
+        glGenBuffers(1, &this->EBO);
 
         /* Draw triangles by default */
         drawType = GL_TRIANGLES;
@@ -237,7 +216,7 @@ public:
     }
 
     /**
-     * @brief Set the Vertex object
+     * @brief Set the Vertex object of the model
      * 
      * @param vector Vector of vertex to be used in the model.
      */
@@ -252,6 +231,33 @@ public:
         glEnableVertexAttribArray(0);
 
         this->vertex = vector;
+    }
+
+    /**
+     * @brief Set the Vertex Index object.
+     * 
+     * Set the indexes of the vertex to be draw by OpenGL. (for example by GL_TRIANGLES)
+     * 
+     * @param vector Vector with the indexes of the vertices.
+     */
+    void setVertexIndex(const std::vector<unsigned int> &vector)
+    {
+        glBindVertexArray(this->VAO);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, vector.size() * sizeof(unsigned int), &vector[0], GL_STATIC_DRAW);
+
+        this->indexes = vector;
+    }
+
+    /**
+     * @brief Get the Indexes object of the model.
+     * 
+     * @return const std::vector<float>& Indexes to be used in the model for render.
+     */
+    const std::vector<unsigned int> &getIndexes()
+    {
+        return this->indexes;
     }
 
     /**
@@ -272,6 +278,16 @@ public:
     GLuint getVBO()
     {
         return this->VBO;
+    }
+
+    /**
+     * @brief Get the EBO of the model.
+     * 
+     * @return GLuint Element Buffer Object id.
+     */
+    GLuint getEBO()
+    {
+        return this->EBO;
     }
 
     /**
